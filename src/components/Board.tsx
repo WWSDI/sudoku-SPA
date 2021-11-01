@@ -31,9 +31,9 @@ export default function Board({
     // Create same num array and sudoku array
     // const AC = document.querySelector(indexToSelector(idx));
     const ACVal = bd[idx].v;
-    const allCells = document.querySelectorAll(".Cell"); 
+    const allCells = document.querySelectorAll(".Cell");
     const sameNumCells: Element[] = Array.from(allCells).filter((cell) => {
-      console.log("😱", cell);
+      // console.log("😱", cell);
       const cellIdx = idToIndex(cell.id);
       const cellVal = bd[cellIdx].v;
       return cellVal !== 0 && cellVal === ACVal;
@@ -69,8 +69,12 @@ export default function Board({
     hlSudoku(ac.i);
     hlSameNum(ac.i);
     hlAC(ac.i);
-  }, [sudoku]); // ignore the dependency warning
+  }, [bd, sudoku]); // ignore the dependency warning
 
+  // 3. highlight same num, conflict when bd chagnes
+  // useEffect(() => {
+  //   hlSameNum(ac.i);
+  // }, [bd]);
 
   // 😱😱😱 之前的版本，暂时不用
   // useEffect(() => {

@@ -19,37 +19,32 @@ const makeBd = (v: number, i: number): CellType => ({
 });
 const initBd: BdType = initBdVal.map(makeBd);
 
-// const initHl =[]
-// const hlReducer = (hl: number[], action: actionType) => {
-//   switch (action.type) {
-//     case "set":
-//       return hl;
-//     default:
-//       throw new Error("Unhandled action type: " + action.type);
-//   }
-// };
-
 export default function Game() {
   const [ac, setAc] = useState<AC>({ i: 0, v: 0 });
-  // keypress state is for solving the click ac and the user filled number disappear bug; delete this if no longer userful 
+  // keypress state is for solving the click ac and the user filled number disappear bug; delete this if no longer userful
   const [keypress, setKeypress] = useState<boolean>(false);
   // bd is state
   // 🔨
   const bdReducer = (bd: BdType, action: actionType) => {
     switch (action.type) {
-      case "SET_AC":
+      case "SET_CELL_VALUE":
         const newBd = [...bd];
-        const i = action.payload.i;
+        const i = ac.i;
+        const v = action.payload.v;
 
-        if (i !== undefined) {
+        console.log(i, v);
+
+        if (v !== undefined) {
           newBd[i] = { ...bd[i] };
           if (bd[i].type === "user") {
-            // newBd[i].v = ac.v;
-            if (bd[i].v !== ac.v) newBd[i].v = ac.v;
-            else if(keypress && bd[i].v === ac.v ) newBd[i].v = 0;
+            // newBd[i].v = v;
+            if (bd[i].v !== v) newBd[i].v = v;
+            // else if (keypress && bd[i].v === v) newBd[i].v = 0;
+            else if (bd[i].v === v) newBd[i].v = 0;
           }
         }
         return newBd;
+
       default:
         throw new Error("Unhandled action type: " + action.type);
     }

@@ -2,19 +2,26 @@ import { NumpadProps } from "../lib/types";
 import { Button } from "./Button";
 import "./Numpad.css";
 
-export default function Numpad({ bd, bdDispatch, ac, setAc, keypress, setKeypress }: NumpadProps) {
+export default function Numpad({
+  bd,
+  bdDispatch,
+  ac,
+  setAc,
+  keypress,
+  setKeypress,
+}: NumpadProps) {
   return (
     <div
       className="Numpad"
       onClick={(e) => {
-        const v = Number((e.target as HTMLDivElement).id);
-        console.log(v, ac.v);
+        // the id is of the same value as the number button
+        const numVal = Number((e.target as HTMLDivElement).id);
+        console.log("Number button value:", numVal, "ac.v:", ac.v);
         setKeypress(true);
-
+        // ❗️ should change this to click on the numpad then change the bd
         //setAc({ ...ac, v });
-        // should change this to click on the numpad then change the bd
-        
 
+        bdDispatch({ type: "SET_CELL_VALUE", payload: { v: numVal } });
       }}
     >
       {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((num) => (
