@@ -1,0 +1,46 @@
+/* base color */
+.Cell {
+  width: 3rem;
+  height: 3rem;
+  border: 1px solid rgb(212, 212, 227);
+  /* border-top: 1px solid lavender;
+  border-right: 1px solid lavender; */
+  font-size: x-large;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.auto {
+  color: black;
+}
+.user {
+  color: steelblue;
+}
+
+/* .empty-Cell {
+  color: steelblue;
+} */
+
+
+/* highlight color*/
+/* What comes later overrides what comes first */
+/* 5 */
+.hl-sudoku {
+  background-color: rgb(222, 232, 232);
+}
+/* 4 */
+.hl-same-num {
+  background-color: darkgray;
+}
+/* 3 */
+.hl-conflict {
+  background-color: #f2dede;
+}
+/* 2 */
+.hl-ac {
+  background-color: lightcyan;
+}
+/* 1 */
+/* .hl-success {
+  background-color: darkgray;
+}  */

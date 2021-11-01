@@ -1,0 +1,13 @@
+.Button {
+  background-color: #f0f0f0;
+  border-radius: .5rem;
+}
+
+.Button:hover{
+  background-color: lightgray;
+  cursor:pointer;
+}
+/* change to darker color when clicking the button */
+.Button:active{
+  background-color: rgb(181, 180, 180);
+}
