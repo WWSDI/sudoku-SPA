@@ -2,13 +2,14 @@ import { NumpadProps } from "../lib/types";
 import { Button } from "./Button";
 import "./Numpad.css";
 
-export default function Numpad({ bd, bdDispatch, ac, setAc }: NumpadProps) {
+export default function Numpad({ bd, bdDispatch, ac, setAc, keypress, setKeypress }: NumpadProps) {
   return (
     <div
       className="Numpad"
       onClick={(e) => {
         const v = Number((e.target as HTMLDivElement).id);
         console.log(v, ac.v);
+        setKeypress(true);
         setAc({ ...ac, v });
       }}
     >

@@ -15,7 +15,7 @@ export type actionType = {
     type?: "auto" | "user";
   };
 };
-export type BoardProps = {
+export interface BoardProps {
   bd: BdType;
   bdDispatch: React.Dispatch<actionType>;
   ac: AC;
@@ -25,15 +25,7 @@ export type BoardProps = {
       v: number;
     }>
   >;
-};
-export type NumpadProps = {
-  bd: BdType;
-  bdDispatch: React.Dispatch<actionType>;
-  ac: AC;
-  setAc: React.Dispatch<
-    React.SetStateAction<{
-      i: number;
-      v: number;
-    }>
-  >;
-};
+  keypress: boolean;
+  setKeypress: React.Dispatch<React.SetStateAction<boolean>>;
+}
+export interface NumpadProps extends BoardProps {}

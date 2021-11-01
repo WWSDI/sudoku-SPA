@@ -31,6 +31,8 @@ const initBd: BdType = initBdVal.map(makeBd);
 
 export default function Game() {
   const [ac, setAc] = useState<AC>({ i: 0, v: 0 });
+  // keypress state is for solving the click ac and the user filled number disappear bug; delete this if no longer userful 
+  const [keypress, setKeypress] = useState<boolean>(false);
   // bd is state
   // 🔨
   const bdReducer = (bd: BdType, action: actionType) => {
@@ -38,13 +40,13 @@ export default function Game() {
       case "SET_AC":
         const newBd = [...bd];
         const i = action.payload.i;
-  
+
         if (i !== undefined) {
-          newBd[i] = { ...bd[i]};
+          newBd[i] = { ...bd[i] };
           if (bd[i].type === "user") {
             // newBd[i].v = ac.v;
             if (bd[i].v !== ac.v) newBd[i].v = ac.v;
-            else newBd[i].v = 0;
+            else if(keypress && bd[i].v === ac.v ) newBd[i].v = 0;
           }
         }
         return newBd;
@@ -57,8 +59,22 @@ export default function Game() {
   return (
     <div className="game">
       <GameController />
-      <Board bd={bd} bdDispatch={bdDispatch} ac={ac} setAc={setAc} />
-      <Numpad bd={bd} bdDispatch={bdDispatch} ac={ac} setAc={setAc} />
+      <Board
+        bd={bd}
+        bdDispatch={bdDispatch}
+        ac={ac}
+        setAc={setAc}
+        keypress={keypress}
+        setKeypress={setKeypress}
+      />
+      <Numpad
+        bd={bd}
+        bdDispatch={bdDispatch}
+        ac={ac}
+        setAc={setAc}
+        keypress={keypress}
+        setKeypress={setKeypress}
+      />
     </div>
   );
 }

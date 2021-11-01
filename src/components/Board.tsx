@@ -11,6 +11,8 @@ export default function Board({
   bdDispatch,
   ac,
   setAc,
+  keypress,
+  setKeypress,
 }: BoardProps): JSX.Element {
   const removeHl = () => {
     const allCells = document.querySelectorAll(".Cell");
@@ -52,12 +54,20 @@ export default function Board({
       );
     });
 
+    const conflictCells: Element[] = sudoku.filter((cell) => {
+      const idx = idToIndex((cell as HTMLDivElement).id);
+      const v = bd[idx].v;
+      return v !== 0 && v === ac.v;
+    });
+
     // 1. highlight sudoku
     sudoku.forEach((cell) => cell.classList.add("hl-sudoku"));
     // 2. highlight same num
     sameNumCells.forEach((cell) => cell.classList.add("hl-same-num"));
     // 3. highlight AC
     hlAC(idx);
+    // 4. highlight conflict cells
+    conflictCells.forEach((cell) => cell.classList.add("hl-conflict"));
   };
 
   useEffect(() => {
@@ -70,11 +80,15 @@ export default function Board({
   useEffect(() => {
     // TODO: change css for cells based on cell type when bd changes
     console.log("ac.v:", ac.v);
+    bdDispatch({ type: "SET_AC", payload: { ...ac } });
     // 1. hl conflict cells
+
     // 2. hl error (AC could be error if in conflict of )
     // 3. change bd based on ac
-    bdDispatch({ type: "SET_AC", payload: {...ac} });
-  }, [ac, bdDispatch]);
+    return () => {
+      setKeypress(false);
+    };
+  }, [ac, bdDispatch, keypress, setKeypress]);
 
   return (
     <div
