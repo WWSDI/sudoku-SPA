@@ -31,7 +31,7 @@
   i: 44, // cell index (range from 0 - 80)
   v: 5, //cell value
   type: 'auto' // 'auto' | 'user'
-  error: false // boolean. true if cell value is in conflit with other sudoku cell(s)
+  error: false // boolean. true if cell value does NOT equal the solution value 
 }]
 ```
 

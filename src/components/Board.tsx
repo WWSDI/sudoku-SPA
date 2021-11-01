@@ -2,48 +2,54 @@ import Cell from "./Cell";
 import "./Board.css";
 import { CellType, BdType, BoardProps } from "../lib/types";
 import { useEffect } from "react";
+import { idToIndex, idxToij, indexToSelector } from "../util/util";
 
-// UTILITIES
-// ⭐️ convert idx to [i,j]
-const idxToij = (idx: number): [number, number] => {
-  return [Math.floor(idx / 9), idx % 9];
-};
-const hlCell = (idx: number) => {
-  const AC = document.querySelector(`#C${idx}`);
-  AC?.classList.add("hl-ac");
-};
-const cancelHl = () => {
-  const cellList = document.querySelectorAll(".Cell");
-  cellList.forEach((cell) => {
-    cell.classList.remove("hl-sudoku");
-    // cell.classList.remove("hl-sudoku")
-    // cell.classList.remove("hl-sudoku")
+// Highlighting
+
+const removeHl = () => {
+  const allCells = document.querySelectorAll(".Cell");
+  allCells.forEach((cell) => {
+    cell.classList.remove("hl-sudoku", "hl-ac", "hl-same-num");
   });
 };
-const hlSudoku = (idx: number) => {
-  // const idx = e.target.attributes.idx.value;
-  // create another function to highlight RCB based on active cell
-  const [rowI, colJ] = idxToij(idx);
-  const blcIStart = Math.floor(rowI / 3) * 3;
-  const blcJStart = Math.floor(colJ / 3) * 3;
+const hlSudokuSamenumAC = (idx: number, bd: BdType) => {
+  // ❗️ This part can be optimised by using a lookup obj instead of calculating every time
+  const [i, j] = idxToij(idx);
+  const blcIStart = Math.floor(i / 3) * 3;
+  const blcJStart = Math.floor(j / 3) * 3;
+  const allCells = document.querySelectorAll(".Cell");
+  const AC = document.querySelector(indexToSelector(idx));
+  const ACVal = bd[idx].v;
 
-  const cellList = document.querySelectorAll(".Cell");
-  const rowColBlc = Array.from(cellList).filter((cell) => {
+  function hlAC(idx: number) {
+    AC?.classList.add("hl-ac");
+  }
+  // Create same num array and sudoku array
+  const sameNumCells: Element[] = [];
+  const sudoku = Array.from(allCells).filter((cell) => {
     // console.log("CELL:", cell);
-    const [i, j] = idxToij(Number((cell as HTMLDivElement).id.substr(1)));
+    const idx = idToIndex((cell as HTMLDivElement).id);
+    const [m, n] = idxToij(idx);
+    // push all same num cells to the array
+    const v = bd[idx].v;
+    if (v !== 0 && v === ACVal) sameNumCells.push(cell);
+
     return (
-      i === rowI ||
-      j === colJ ||
-      (i >= blcIStart &&
-        i < blcIStart + 3 &&
-        j >= blcJStart &&
-        j < blcJStart + 3)
+      m === i ||
+      n === j ||
+      (m >= blcIStart &&
+        m < blcIStart + 3 &&
+        n >= blcJStart &&
+        n < blcJStart + 3)
     );
   });
 
-  // console.log(rowColBlc);
-  rowColBlc.forEach((cell) => cell.classList.add("hl-sudoku"));
-  // hlCell();
+  // 1. highlight sudoku
+  sudoku.forEach((cell) => cell.classList.add("hl-sudoku"));
+  // 2. highlight same num
+  sameNumCells.forEach((cell) => cell.classList.add("hl-same-num"));
+  // 3. highlight AC
+  hlAC(idx);
 };
 
 export default function Board({
@@ -53,16 +59,16 @@ export default function Board({
   setAc,
 }: BoardProps): JSX.Element {
   useEffect(() => {
-    //TODO: change hl when ac changes
-    console.log("🤖", document.querySelector("#C19"));
-    cancelHl();
-    hlSudoku(ac.i);
-    hlCell(ac.i);
-    //bdDispatch();
-  }, [ac]);
+    // ✅ TODO: change hl when ac changes
+    // console.log("🤖", document.querySelector("#C19"));
+    removeHl();
+    hlSudokuSamenumAC(ac.i, bd);
+  }, [ac, bd]);
 
   useEffect(() => {
     // TODO: change css for cells based on cell type when bd changes
+    // 1. hl conflict cells
+    // 2. hl error (AC could be error if in conflict of )
   }, [bd]);
 
   return (
