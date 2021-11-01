@@ -10,7 +10,11 @@ export default function Numpad({ bd, bdDispatch, ac, setAc, keypress, setKeypres
         const v = Number((e.target as HTMLDivElement).id);
         console.log(v, ac.v);
         setKeypress(true);
-        setAc({ ...ac, v });
+
+        //setAc({ ...ac, v });
+        // should change this to click on the numpad then change the bd
+        
+
       }}
     >
       {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((num) => (

@@ -71,3 +71,12 @@ May need to use **react-transition-group**
   - implementation:
     - ? do I need to use state
       - it seems that to change css you should only 
+
+
+## 🌸 Refactor highlight and input number features
+highlight
+- [x] breakdown hl sudoku, same num and AC
+- [x] use a new state to save sudoku so it can be used in multiple opeartions
+
+input number
+- [ ] change order of logic to: upon **onClick** of numpad is triggered, immediately change **bd**, then useEffect trigger a change in **ac**
