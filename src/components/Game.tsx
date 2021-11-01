@@ -1,5 +1,5 @@
 import { useReducer, useState } from "react";
-import { actionType, BdType, CellType } from "../lib/types";
+import { AC, actionType, BdType, CellType } from "../lib/types";
 import  Board  from "./Board";
 import BoardController from "./BoardController";
 import GameController from "./GameController";
@@ -38,7 +38,7 @@ const bdReducer = (bd: BdType, action: actionType) => {
 // };
 
 export default function Game() {
-  const [ac, setAc] = useState({ i: 0, v: 0 });
+  const [ac, setAc] = useState<AC>({ i: 0, v: 0 });
   const [bd, bdDispatch] = useReducer(bdReducer, initBd);
   // const [hl, hlDispatch] = useReducer(hlReducer, initHl);
   return (

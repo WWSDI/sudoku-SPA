@@ -5,16 +5,17 @@ interface CellProps {
   cell: CellType;
 }
 
-interface DivProps{
+interface DivProps {
   i?: number;
 }
 
-export default function Cell({
-  cell: { v, i, type, error },
-}: CellProps): JSX.Element {
+export default function Cell({ cell: { v, i, type, error } }: CellProps) {
   return (
     // <div className={v ? "Cell" : "Cell empty-Cell"} i={i}>
-    <div className={v ? "Cell" : "Cell empty-Cell"}>
+    <div
+      className={v ? "Cell" : "Cell empty-Cell"}
+      id={"C" + String(i).padStart(2, "0")}
+    >
       {v ? v : ""}
     </div>
   );

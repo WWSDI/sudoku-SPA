@@ -8,35 +8,43 @@ import { useEffect } from "react";
 const idxToij = (idx: number): [number, number] => {
   return [Math.floor(idx / 9), idx % 9];
 };
-// const hlCell = (e) => {
-//   e.target.classList.toggle("hl-cell");
-// };
+const hlCell = (idx: number) => {
+  const AC = document.querySelector(`#C${idx}`);
+  AC?.classList.add("hl-ac");
+};
+const cancelHl = () => {
+  const cellList = document.querySelectorAll(".Cell");
+  cellList.forEach((cell) => {
+    cell.classList.remove("hl-sudoku");
+    // cell.classList.remove("hl-sudoku")
+    // cell.classList.remove("hl-sudoku")
+  });
+};
+const hlSudoku = (idx: number) => {
+  // const idx = e.target.attributes.idx.value;
+  // create another function to highlight RCB based on active cell
+  const [rowI, colJ] = idxToij(idx);
+  const blcIStart = Math.floor(rowI / 3) * 3;
+  const blcJStart = Math.floor(colJ / 3) * 3;
 
-// const hlSudoku = (idx: number) => {
-//   // console.log(e.target);
-//   // const idx = e.target.attributes.idx.value;
-//   // create another function to highlight RCB based on active cell
-//   const [rowI, colJ] = idxToij(idx);
-//   const blcIStart = Math.floor(rowI / 3) * 3;
-//   const blcJStart = Math.floor(colJ / 3) * 3;
+  const cellList = document.querySelectorAll(".Cell");
+  const rowColBlc = Array.from(cellList).filter((cell) => {
+    // console.log("CELL:", cell);
+    const [i, j] = idxToij(Number((cell as HTMLDivElement).id.substr(1)));
+    return (
+      i === rowI ||
+      j === colJ ||
+      (i >= blcIStart &&
+        i < blcIStart + 3 &&
+        j >= blcJStart &&
+        j < blcJStart + 3)
+    );
+  });
 
-//   const cellList = document.querySelectorAll(".Cell");
-//   const rowColBlc = Array.from(cellList).filter((cell) => {
-//     const [i, j] = idxToij(cell.attributes.idx.value);
-//     return (
-//       i === rowI ||
-//       j === colJ ||
-//       (i >= blcIStart &&
-//         i < blcIStart + 3 &&
-//         j >= blcJStart &&
-//         j < blcJStart + 3)
-//     );
-//   });
-
-//   // console.log(rowColBlc);
-//   rowColBlc.forEach((cell) => cell.classList.toggle("hl-sudoku"));
-//   // hlCell();
-// };
+  // console.log(rowColBlc);
+  rowColBlc.forEach((cell) => cell.classList.add("hl-sudoku"));
+  // hlCell();
+};
 
 export default function Board({
   bd,
@@ -46,9 +54,12 @@ export default function Board({
 }: BoardProps): JSX.Element {
   useEffect(() => {
     //TODO: change hl when ac changes
-    //hlSudoku();
+    console.log("🤖", document.querySelector("#C19"));
+    cancelHl();
+    hlSudoku(ac.i);
+    hlCell(ac.i);
     //bdDispatch();
-  }, [ac, bdDispatch]);
+  }, [ac]);
 
   useEffect(() => {
     // TODO: change css for cells based on cell type when bd changes
@@ -57,11 +68,14 @@ export default function Board({
   return (
     <div
       className="Board"
-      onClick={
-        (e: React.MouseEvent<HTMLDivElement, MouseEvent>) =>
-          console.log(e.target)
-        //setAc(e.target.attributes.idx.value)
-      }
+      id="Board"
+      onClick={(e) => {
+        // 👹👹👹 use as keyword to cast e.target to a more specific type!!!
+        console.log("Cell index:", (e.target as HTMLInputElement).id);
+        const i = Number((e.target as HTMLDivElement).id.substr(1));
+        const v = bd[i].v;
+        setAc({ v, i });
+      }}
     >
       {bd.map((cell: CellType) => (
         <Cell cell={cell} key={cell.i} />
