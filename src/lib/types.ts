@@ -1,4 +1,3 @@
-
 export type AC = { i: number; v: number };
 
 export type CellType = {
@@ -16,6 +15,17 @@ export type actionType = {
   };
 };
 export type BoardProps = {
+  bd: BdType;
+  bdDispatch: React.Dispatch<actionType>;
+  ac: AC;
+  setAc: React.Dispatch<
+    React.SetStateAction<{
+      i: number;
+      v: number;
+    }>
+  >;
+};
+export type NumpadProps = {
   bd: BdType;
   bdDispatch: React.Dispatch<actionType>;
   ac: AC;

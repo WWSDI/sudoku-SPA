@@ -1,8 +1,9 @@
 import { useReducer, useState } from "react";
 import { AC, actionType, BdType, CellType } from "../lib/types";
-import  Board  from "./Board";
+import Board from "./Board";
 import BoardController from "./BoardController";
 import GameController from "./GameController";
+import Numpad from "./Numpad";
 
 const initBdVal = [
   0, 1, 0, 0, 6, 4, 0, 3, 8, 0, 4, 9, 0, 7, 3, 5, 1, 6, 0, 0, 8, 0, 1, 2, 0, 9,
@@ -45,7 +46,7 @@ export default function Game() {
     <div className="game">
       <GameController />
       <Board bd={bd} bdDispatch={bdDispatch} ac={ac} setAc={setAc} />
-      <BoardController />
+      <Numpad bd={bd} bdDispatch={bdDispatch} ac={ac} setAc={setAc} />
     </div>
   );
 }
