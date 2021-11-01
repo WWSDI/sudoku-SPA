@@ -10,6 +10,7 @@ export type BdType = CellType[];
 export type actionType = {
   type: string;
   payload: {
+    i?: number;
     v?: number;
     type?: "auto" | "user";
   };

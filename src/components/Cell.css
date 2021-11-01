@@ -11,10 +11,10 @@
   align-items: center;
 }
 .auto {
-  color: black;
+  color: rgb(92, 92, 92);
 }
 .user {
-  color: steelblue;
+  color: rgb(31, 125, 201);
 }
 
 /* .empty-Cell {

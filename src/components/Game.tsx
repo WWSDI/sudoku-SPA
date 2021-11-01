@@ -18,16 +18,7 @@ const makeBd = (v: number, i: number): CellType => ({
   error: false,
 });
 const initBd: BdType = initBdVal.map(makeBd);
-// bd is state
-// 🔨
-const bdReducer = (bd: BdType, action: actionType) => {
-  switch (action.type) {
-    case "set":
-      return bd;
-    default:
-      throw new Error("Unhandled action type: " + action.type);
-  }
-};
+
 // const initHl =[]
 // const hlReducer = (hl: number[], action: actionType) => {
 //   switch (action.type) {
@@ -40,6 +31,27 @@ const bdReducer = (bd: BdType, action: actionType) => {
 
 export default function Game() {
   const [ac, setAc] = useState<AC>({ i: 0, v: 0 });
+  // bd is state
+  // 🔨
+  const bdReducer = (bd: BdType, action: actionType) => {
+    switch (action.type) {
+      case "SET_AC":
+        const newBd = [...bd];
+        const i = action.payload.i;
+  
+        if (i !== undefined) {
+          newBd[i] = { ...bd[i]};
+          if (bd[i].type === "user") {
+            // newBd[i].v = ac.v;
+            if (bd[i].v !== ac.v) newBd[i].v = ac.v;
+            else newBd[i].v = 0;
+          }
+        }
+        return newBd;
+      default:
+        throw new Error("Unhandled action type: " + action.type);
+    }
+  };
   const [bd, bdDispatch] = useReducer(bdReducer, initBd);
   // const [hl, hlDispatch] = useReducer(hlReducer, initHl);
   return (

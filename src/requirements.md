@@ -17,6 +17,8 @@
 
 ### Animation ⛔️
 
+May need to use **react-transition-group**
+
 - fill a row | col | blc
   - triggers a one time bc highlight animation
     - Implementation:

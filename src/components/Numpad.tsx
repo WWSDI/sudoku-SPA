@@ -7,8 +7,8 @@ export default function Numpad({ bd, bdDispatch, ac, setAc }: NumpadProps) {
     <div
       className="Numpad"
       onClick={(e) => {
-        //console.log("e: ", target.attributes.num.value);
         const v = Number((e.target as HTMLDivElement).id);
+        console.log(v, ac.v);
         setAc({ ...ac, v });
       }}
     >
