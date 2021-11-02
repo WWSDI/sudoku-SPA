@@ -83,3 +83,5 @@ var solutions_10 = getSolutions(10, AllSolutions100);
 console.log("👹", solutions_10);
 var puzzleSolutions = getPuzzleSolution(solutions_10);
 console.log("👹", puzzleSolutions);
+console.log("👹", puzzleSolutions.easy);
+console.log("👹", puzzleSolutions.easy[0]);

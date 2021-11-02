@@ -1,9 +1,18 @@
-// import getSolutions from "./getSolutions";
-
 const AllSolutions100: number[][] = require("../../../data/100solutions_1D.json");
-// const AllSolutions100 = require("../data");
 
-console.log("😀", AllSolutions100.length, AllSolutions100[1]);
+// console.log("😀", AllSolutions100.length, AllSolutions100[1]);
+
+const lookupDifficulty = {
+  easy: {
+    numZero: 40,
+  },
+  medium: {
+    numZero: 50,
+  },
+  hard: {
+    numZero: 60,
+  },
+};
 
 const getSolutions = (
   numSolutions: number,
@@ -17,20 +26,6 @@ const getSolutions = (
     solutions.push(oneSolution);
   }
   return solutions;
-};
-
-module.exports = getSolutions;
-
-const lookupDifficulty = {
-  easy: {
-    numZero: 40,
-  },
-  medium: {
-    numZero: 50,
-  },
-  hard: {
-    numZero: 60,
-  },
 };
 
 const nonrepeatRanNums = (ceil: number, numZero: number): number[] => {
@@ -97,6 +92,8 @@ const getPuzzleSolution = (
   return result;
 };
 
+module.exports = { getPuzzleSolution };
+
 // 🧪🧪🧪 TESTING
 // console.log(arr1.length, arr1);
 // const sampleSolution1 = [
@@ -113,9 +110,12 @@ const getPuzzleSolution = (
 // const puzzle1 = createPuzzle(sampleSolution1, "easy");
 // console.log(puzzle1, countZeros(puzzle1));
 
-const solutions_10 = getSolutions(10, AllSolutions100);
-console.log("👹", solutions_10);
+// ============
+// const solutions_10 = getSolutions(10, AllSolutions100);
+// console.log("👹", solutions_10);
 
-const puzzleSolutions = getPuzzleSolution(solutions_10);
+// const puzzleSolutions = getPuzzleSolution(solutions_10);
 
-console.log("👹", puzzleSolutions);
+// console.log("👹", puzzleSolutions);
+// console.log("👹", puzzleSolutions.easy);
+// console.log("👹", puzzleSolutions.easy[0]);
