@@ -31,28 +31,15 @@ const lookupDifficulty = {
   },
 };
 
-const getRanSolutionsMongo = (numSolutions: number): number[][] => {
+const getRanSolutionsMongo = async (numSolutions: number) => {
+  let solutions: number[][] = [];
   // Get the count of all users
-  function getOneRanSolutionMongo() {
-    let solution: { solution: number[] };
-    SolutionModel.count().exec(function (err, count) {
-      // Get a random entry
-      var ranNum = Math.floor(Math.random() * count);
-
-      // Again query all users but only fetch one offset by our random #
-      solution = SolutionModel.findOne()
-        .skip(ranNum)
-        .exec(function (err, result) {
-          // Tada! random user
-          console.log(result);
-        });
-      if (solution) return solution;
-    });
-  }
-
-  const solutions: number[][] = [];
+  const count = await SolutionModel.count();
+  // Get multiple sudoku solutions
   for (let i = 0; i < numSolutions; i++) {
-    solutions.push(getOneRanSolutionMongo());
+    var ranNum = Math.floor(Math.random() * count);
+    const { solution } = await SolutionModel.findOne().skip(ranNum);
+    solutions.push(solution);
   }
 
   return solutions;
@@ -98,7 +85,7 @@ interface AllDifficultyPuzzleSolution {
 const createPuzzleSolutionSets = (
   sudokuSolutions: number[][],
 ): AllDifficultyPuzzleSolution => {
-  const solutions = getRanSolutionsMongo(100, sudokuSolutions);
+  // const solutions = getRanSolutionsMongo(100);
 
   const numPuzzles = sudokuSolutions.length;
   const result: AllDifficultyPuzzleSolution = {

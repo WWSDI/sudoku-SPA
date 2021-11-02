@@ -1,6 +1,8 @@
 "use strict";
 var app = require('./app');
-// connect("mongodb://localhost:27017/sudoku");
-app.listen(3000, function () {
-    console.log("Server is running on port 3000");
+var connect = require('mongoose').connect;
+connect("mongodb://localhost:27017/sudoku");
+var port = process.env.PORT || 5005;
+app.listen(port, function () {
+    console.log("Server is running on port " + port);
 });
