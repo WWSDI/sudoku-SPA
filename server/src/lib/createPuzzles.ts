@@ -14,6 +14,7 @@ const lookupDifficulty = {
   },
 };
 
+// ❗️This needs to work with mongodb eventually
 const getSolutions = (
   numSolutions: number,
   AllSolutions: number[][],
@@ -68,6 +69,8 @@ interface AllDifficultyPuzzleSolution {
 const getPuzzleSolution = (
   sudokuSolutions: number[][],
 ): AllDifficultyPuzzleSolution => {
+  const solutions = getSolutions(100, sudokuSolutions);
+
   const numPuzzles = sudokuSolutions.length;
   const result: AllDifficultyPuzzleSolution = {
     easy: [],
