@@ -13,6 +13,8 @@ export default function Board({
   setAc,
   keypress,
   setKeypress,
+  won,
+  setWon,
 }: BoardProps): JSX.Element {
   const [sudoku, setSudoku] = useState<Element[]>([]);
 
@@ -55,6 +57,14 @@ export default function Board({
     // highlight conflict cells
     conflictCells.forEach((cell) => cell.classList.add("hl-conflict"));
   };
+  const didIWin = () => {
+    // 1. check if all cells are filled
+    // 2. check if all cells' error property are false
+    for (let cell of bd) {
+      if (cell.v === 0 || cell.error === true) return false;
+    }
+    return true;
+  };
 
   // 1. update sudoku
   useEffect(() => {
@@ -73,9 +83,10 @@ export default function Board({
   }, [bd, sudoku]); // ignore the dependency warning
 
   // 3. highlight same num, conflict when bd chagnes
-  // useEffect(() => {
-  //   hlSameNum(ac.i);
-  // }, [bd]);
+  useEffect(() => {
+    if (didIWin()) setWon(true);
+    console.log("WON:",won);
+  }, [bd, won]);
 
   // 😱😱😱 之前的版本，暂时不用
   // useEffect(() => {

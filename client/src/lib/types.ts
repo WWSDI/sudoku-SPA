@@ -27,5 +27,7 @@ export interface BoardProps {
   >;
   keypress: boolean;
   setKeypress: React.Dispatch<React.SetStateAction<boolean>>;
+  won: boolean;
+  setWon: React.Dispatch<React.SetStateAction<boolean>>;
 }
 export interface NumpadProps extends BoardProps {}
