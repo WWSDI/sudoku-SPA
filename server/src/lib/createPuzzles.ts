@@ -1,4 +1,21 @@
-const AllSolutions100: number[][] = require("../../../data/100solutions_1D.json");
+//const AllSolutions100: number[][] = require("../../../data/100solutions_1D.json");
+
+import { SolutionModel } from "../models/SolutionModel";
+
+// ❗️This needs to work with mongodb eventually
+// const getSolutions = (
+//   numSolutions: number,
+//   AllSolutions: number[][],
+// ): number[][] => {
+//   const length = AllSolutions.length;
+//   const solutions: number[][] = [];
+//   for (let i = 0; i < numSolutions; i++) {
+//     const oneSolution: number[] =
+//       AllSolutions100[Math.floor(Math.random() * length)];
+//     solutions.push(oneSolution);
+//   }
+//   return solutions;
+// };
 
 // console.log("😀", AllSolutions100.length, AllSolutions100[1]);
 
@@ -14,18 +31,30 @@ const lookupDifficulty = {
   },
 };
 
-// ❗️This needs to work with mongodb eventually
-const getSolutions = (
-  numSolutions: number,
-  AllSolutions: number[][],
-): number[][] => {
-  const length = AllSolutions.length;
+const getRanSolutionsMongo = (numSolutions: number): number[][] => {
+  // Get the count of all users
+  function getOneRanSolutionMongo() {
+    let solution: { solution: number[] };
+    SolutionModel.count().exec(function (err, count) {
+      // Get a random entry
+      var ranNum = Math.floor(Math.random() * count);
+
+      // Again query all users but only fetch one offset by our random #
+      solution = SolutionModel.findOne()
+        .skip(ranNum)
+        .exec(function (err, result) {
+          // Tada! random user
+          console.log(result);
+        });
+      if (solution) return solution;
+    });
+  }
+
   const solutions: number[][] = [];
   for (let i = 0; i < numSolutions; i++) {
-    const oneSolution: number[] =
-      AllSolutions100[Math.floor(Math.random() * length)];
-    solutions.push(oneSolution);
+    solutions.push(getOneRanSolutionMongo());
   }
+
   return solutions;
 };
 
@@ -66,10 +95,10 @@ interface AllDifficultyPuzzleSolution {
   hard: PuzzleSolution[];
 }
 
-const getPuzzleSolution = (
+const createPuzzleSolutionSets = (
   sudokuSolutions: number[][],
 ): AllDifficultyPuzzleSolution => {
-  const solutions = getSolutions(100, sudokuSolutions);
+  const solutions = getRanSolutionsMongo(100, sudokuSolutions);
 
   const numPuzzles = sudokuSolutions.length;
   const result: AllDifficultyPuzzleSolution = {
@@ -95,7 +124,7 @@ const getPuzzleSolution = (
   return result;
 };
 
-module.exports = { getPuzzleSolution };
+module.exports = { createPuzzleSolutionSets, getRanSolutionsMongo };
 
 // 🧪🧪🧪 TESTING
 // console.log(arr1.length, arr1);

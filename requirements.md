@@ -113,9 +113,9 @@ input number
 
 ## Mongodb data
 
-solutions collection
-
+solutions collection document structure:
 ```json
+
 {
   "solution": [
     4, 9, 7, 8, 2, 5, 3, 1, 6, 6, 2, 1, 4, 3, 7, 8, 9, 5, 8, 5, 3, 9, 1, 6, 4,
