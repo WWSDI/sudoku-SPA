@@ -65,9 +65,13 @@ May need to use **react-transition-group**
 ## Todos
 
 - [ ] add new game feature
-  - [ ] setup API server
-    - [ ] GET /gameboards
-      - get a single one gameboard with difficulty level stipulated can be solved by using **query**
+  - [x] setup API server
+    - [x] GET /puzzles
+      - get 10 puzzles&solutions for each difficulty
+    - [x] setup mongodb to store 10,000 solutions
+  - [ ] save puzzles fetched from API in React, with localstorage 
+- [ ] Auth0 / FB / Google
+- [ ] PWA
 
 ### glossary
 

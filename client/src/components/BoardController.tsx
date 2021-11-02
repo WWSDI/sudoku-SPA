@@ -1,3 +1,10 @@
 export default function BoardController() {
-  return <></>;
+  return (
+    <>
+      <div className="">Undo</div>
+      <div>Erase</div>
+      <div>Notes</div>
+      <div>Hits</div>
+    </>
+  );
 }

@@ -69,6 +69,7 @@ export default function Board({
     hlSudoku(ac.i);
     hlSameNum(ac.i);
     hlAC(ac.i);
+    console.log("CELL:", bd[ac.i]);
   }, [bd, sudoku]); // ignore the dependency warning
 
   // 3. highlight same num, conflict when bd chagnes

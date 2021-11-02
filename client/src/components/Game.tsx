@@ -5,11 +5,17 @@ import BoardController from "./BoardController";
 import GameController from "./GameController";
 import Numpad from "./Numpad";
 
-const initBdVal = [
-  0, 1, 0, 0, 6, 4, 0, 3, 8, 0, 4, 9, 0, 7, 3, 5, 1, 6, 0, 0, 8, 0, 1, 2, 0, 9,
-  0, 0, 0, 7, 4, 3, 6, 0, 5, 2, 5, 0, 3, 0, 9, 8, 6, 4, 0, 4, 0, 6, 2, 5, 1, 9,
-  7, 3, 0, 0, 4, 1, 0, 7, 0, 2, 0, 3, 0, 2, 6, 4, 9, 1, 8, 7, 8, 0, 1, 3, 0, 5,
-  4, 6, 0,
+const puzzle = [
+  3, 2, 1, 7, 4, 9, 8, 6, 5, 7, 5, 6, 3, 8, 2, 1, 9, 4, 4, 8, 9, 1, 5, 6, 3, 7,
+  2, 2, 4, 3, 8, 9, 1, 7, 5, 6, 9, 7, 8, 5, 6, 3, 4, 2, 1, 6, 1, 5, 2, 7, 4, 9,
+  8, 3, 8, 6, 4, 9, 1, 5, 2, 3, 7, 5, 9, 2, 4, 3, 7, 6, 1, 8, 1, 3, 7, 6, 2, 8,
+  5, 4, 0,
+];
+const solution = [
+  3, 2, 1, 7, 4, 9, 8, 6, 5, 7, 5, 6, 3, 8, 2, 1, 9, 4, 4, 8, 9, 1, 5, 6, 3, 7,
+  2, 2, 4, 3, 8, 9, 1, 7, 5, 6, 9, 7, 8, 5, 6, 3, 4, 2, 1, 6, 1, 5, 2, 7, 4, 9,
+  8, 3, 8, 6, 4, 9, 1, 5, 2, 3, 7, 5, 9, 2, 4, 3, 7, 6, 1, 8, 1, 3, 7, 6, 2, 8,
+  5, 4, 9,
 ];
 const makeBd = (v: number, i: number): CellType => ({
   v,
@@ -17,7 +23,7 @@ const makeBd = (v: number, i: number): CellType => ({
   type: v !== 0 ? "auto" : "user",
   error: false,
 });
-const initBd: BdType = initBdVal.map(makeBd);
+const initBd: BdType = puzzle.map(makeBd);
 
 export default function Game() {
   const [ac, setAc] = useState<AC>({ i: 0, v: 0 });
@@ -31,18 +37,29 @@ export default function Game() {
         const newBd = [...bd];
         const i = ac.i;
         const v = action.payload.v;
-
-        console.log(i, v);
+        //console.log(i, v);
 
         if (v !== undefined) {
           newBd[i] = { ...bd[i] };
           if (bd[i].type === "user") {
-            // newBd[i].v = v;
-            if (bd[i].v !== v) newBd[i].v = v;
-            // else if (keypress && bd[i].v === v) newBd[i].v = 0;
-            else if (bd[i].v === v) newBd[i].v = 0;
+            // if cell is empty, fill new value;
+            if (bd[i].v !== v) {
+              newBd[i].v = v;
+              // if new value is different than solution value, set error to true
+              if (v !== solution[i]) {
+                newBd[i].error = true;
+              } else {
+                newBd[i].error = false;
+              }
+            }
+            //if given the same value as filled value, empty the cell
+            else if (bd[i].v === v) {
+              newBd[i].v = 0;
+              newBd[i].error = false;
+            }
           }
         }
+
         return newBd;
 
       default:
@@ -51,6 +68,7 @@ export default function Game() {
   };
   const [bd, bdDispatch] = useReducer(bdReducer, initBd);
   // const [hl, hlDispatch] = useReducer(hlReducer, initHl);
+
   return (
     <div className="game">
       <GameController />
