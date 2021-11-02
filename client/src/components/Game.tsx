@@ -1,31 +1,28 @@
 import { useReducer, useState } from "react";
+import makeBd from "../lib/makeBd";
 import { AC, actionType, BdType, CellType } from "../lib/types";
 import Board from "./Board";
 import BoardController from "./BoardController";
 import GameController from "./GameController";
 import Numpad from "./Numpad";
 
-const puzzle = [
+let initPuzzle = [
   3, 2, 1, 0, 4, 9, 8, 6, 5, 7, 5, 6, 3, 8, 2, 1, 9, 4, 4, 8, 9, 1, 5, 6, 3, 7,
   2, 2, 4, 3, 8, 9, 1, 7, 5, 6, 9, 7, 8, 5, 6, 3, 4, 2, 1, 6, 1, 5, 2, 7, 4, 9,
   8, 3, 8, 0, 4, 9, 1, 5, 2, 3, 7, 5, 9, 2, 4, 3, 7, 6, 1, 8, 1, 3, 7, 6, 2, 8,
   5, 4, 0,
 ];
-const solution = [
+let initSolution = [
   3, 2, 1, 7, 4, 9, 8, 6, 5, 7, 5, 6, 3, 8, 2, 1, 9, 4, 4, 8, 9, 1, 5, 6, 3, 7,
   2, 2, 4, 3, 8, 9, 1, 7, 5, 6, 9, 7, 8, 5, 6, 3, 4, 2, 1, 6, 1, 5, 2, 7, 4, 9,
   8, 3, 8, 6, 4, 9, 1, 5, 2, 3, 7, 5, 9, 2, 4, 3, 7, 6, 1, 8, 1, 3, 7, 6, 2, 8,
   5, 4, 9,
 ];
-const makeBd = (v: number, i: number): CellType => ({
-  v,
-  i,
-  type: v !== 0 ? "auto" : "user",
-  error: false,
-});
-const initBd: BdType = puzzle.map(makeBd);
+
 
 export default function Game() {
+  const [puzzle, setPuzzle] = useState(initPuzzle);
+  const [solution, setSolution] = useState(initSolution);
   const [ac, setAc] = useState<AC>({ i: 0, v: 0 });
   // keypress state is for solving the click ac and the user filled number disappear bug; delete this if no longer userful
   const [keypress, setKeypress] = useState(false);
@@ -67,7 +64,7 @@ export default function Game() {
         throw new Error("Unhandled action type: " + action.type);
     }
   };
-  const [bd, bdDispatch] = useReducer(bdReducer, initBd);
+  const [bd, bdDispatch] = useReducer(bdReducer, makeBd(puzzle));
   const [won, setWon] = useState(false);
 
   return (

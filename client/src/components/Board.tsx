@@ -108,7 +108,6 @@ export default function Board({
       id="Board"
       onClick={(e) => {
         // 👹👹👹 use as keyword to cast e.target to a more specific type!!!
-        console.log("Cell index:", (e.target as HTMLInputElement).id);
         const i = Number((e.target as HTMLDivElement).id.substr(1));
         const v = bd[i].v;
         setAc({ v, i });
