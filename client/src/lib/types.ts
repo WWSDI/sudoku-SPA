@@ -31,3 +31,16 @@ export interface BoardProps {
   setWon: React.Dispatch<React.SetStateAction<boolean>>;
 }
 export interface NumpadProps extends BoardProps {}
+
+export type Puzzle = {
+  puzzle: number[];
+  solution: number[];
+};
+export type Puzzles = {
+  puzzles: {
+    easy: Puzzle[];
+    medium: Puzzle[];
+    hard: Puzzle[];
+  };
+};
+export type Difficulty = "easy" | "medium" | "hard";

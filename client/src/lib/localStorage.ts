@@ -1,17 +1,17 @@
-type Puzzle = {
-  puzzle: number[];
-  solution: number[];
-};
-type Puzzles = {
-  puzzles: {
-    easy: Puzzle[];
-    medium: Puzzle[];
-    hard: Puzzle[];
-  };
-};
-type Difficulty = "easy" | "medium" | "hard";
+import { Puzzles, Difficulty } from "./types";
 
-export const storeFetchedPuzzles = (puzzles: Puzzles) => {
+export const fetchPuzzles = async () => {
+  const response = await fetch("http://localhost:5005/puzzles");
+  if (response.ok) {
+    const puzzles: Puzzles = await response.json();
+    console.log("🌈 new puzzles fetched", puzzles);
+    return puzzles;
+  } else {
+    alert("Error: fetching puzzles not successful");
+  }
+};
+
+export const storeFetchedPuzzles = async (puzzles: Puzzles) => {
   ["easy", "medium", "hard"].forEach((difficulty) => {
     localStorage.setItem(
       `puzzles-${difficulty}`,
