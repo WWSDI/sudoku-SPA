@@ -2,8 +2,15 @@ import Cell from "./Cell";
 import "./Board.css";
 import { CellType, BdType, BoardProps } from "../lib/types";
 import { useEffect, useState } from "react";
-import { getSudoku, idToIndex, idxToij, indexToSelector } from "../util/util";
+import {
+  get2DSolutionFromBd,
+  getSudoku,
+  idToIndex,
+  idxToij,
+  indexToSelector,
+} from "../util/util";
 import makeBd from "../lib/makeBd";
+import validateSolution from "../util/sudokuValidator";
 
 // Highlighting
 
@@ -23,7 +30,7 @@ export default function Board({
   const getSudokuVals = (sudoku: Element[]) => {
     const sudokuVals = [];
     for (let i = 0; i < sudoku.length; i++) {
-      const idx = idToIndex(sudoku[i].id)
+      const idx = idToIndex(sudoku[i].id);
       sudokuVals.push(bd[idx].v);
     }
     return sudokuVals;
@@ -80,10 +87,15 @@ export default function Board({
   const didIWin = () => {
     // 1. check if all cells are filled
     // 2. check if all cells' error property are false
-    for (let cell of bd) {
-      if (cell.v === 0 || cell.error === true) return false;
-    }
-    return true;
+    // for (let cell of bd) {
+    //   if (cell.v === 0 || cell.error === true) return false;
+    // }
+    const solution2D = get2DSolutionFromBd(bd);
+    console.log("2D Solution:", solution2D);
+    const result = validateSolution(solution2D);
+    console.log("Result:", result);
+
+    return result;
   };
 
   // 1. update sudoku
@@ -100,7 +112,7 @@ export default function Board({
     hlSameNum(ac.i);
     hlAC(ac.i);
 
-    console.log("sudokuVal", getSudokuVals(sudoku))
+    console.log("sudokuVal", getSudokuVals(sudoku));
     // hlConflict();
     // hlConflict(ac.i);
     // console.log("CELL:", bd[ac.i]);
@@ -150,8 +162,8 @@ export default function Board({
         // 🐞🐞🐞
         // 加入这一个判断，专门用作去除和自身比较的情况
         // ⛔️ !!! 问题在于会取消自身高亮，即便在其他cell仍然高亮的时候
-        // if (cellIdx === conIdx 
-        //   // 
+        // if (cellIdx === conIdx
+        //   //
         //   && !getSudokuVals(sudoku).includes(cellVal)
         //   ) {
         //   arr[i] = -1;

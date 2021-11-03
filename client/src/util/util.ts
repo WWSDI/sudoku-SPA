@@ -1,7 +1,7 @@
-import { CellType } from './../lib/types';
+import { CellType } from "./../lib/types";
 import { BdType } from "../lib/types";
-import Cell from '../components/Cell';
-import validateSolution from './sudokuValidator';
+import Cell from "../components/Cell";
+import validateSolution from "./sudokuValidator";
 
 // ⭐️ convert index to [i,j]
 export const idxToij = (idx: number): [number, number] => [
@@ -18,7 +18,7 @@ export const getSudoku = (idx: number) => {
     // console.log("CELL:", cell);
     const idx = idToIndex((cell as HTMLDivElement).id);
     const [m, n] = idxToij(idx);
-    
+
     return (
       m === i ||
       n === j ||
@@ -29,7 +29,7 @@ export const getSudoku = (idx: number) => {
     );
   });
   return sudoku;
-}
+};
 
 // Formatting
 export const indexToSelector = (index: number) =>
@@ -38,13 +38,13 @@ export const indexToSelector = (index: number) =>
 export const idToIndex = (id: string) => parseInt(id.substr(1));
 
 export const get2DSolutionFromBd = (bd: BdType) => {
-  const solution1D = bd.map( (cell:CellType) => cell.v);
-  const solution2D: number[][] = Array.from({length:9}, () => Array(9).fill([]))
+  const solution1D = bd.map((cell: CellType) => cell.v);
+  const solution2D: number[][] = Array.from({ length: 9 }, () => []);
 
-  for(let i = 0; i < 9; i++) {
-    for(let j = 0; j < 9; j++) {
-      solution2D[i].push(solution1D[i+j]);
+  for (let i = 0; i < 9; i++) {
+    for (let j = 0; j < 9; j++) {
+      solution2D[i].push(solution1D[i * 9 + j]);
     }
   }
-  return validateSolution(solution2D);
+  return solution2D;
 };

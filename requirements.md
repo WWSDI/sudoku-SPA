@@ -129,3 +129,10 @@ solutions collection document structure:
   ]
 }
 ```
+### 🐞🐞🐞 Bugs
+- [] highlight conflict bug
+  - if ac is in conflict, even after changing the num and resolving the conflict, ac is still highlighted
+  - VERY HARD, don't know how to fix yet
+- [x] win bug
+  - user solved a puzzle, yet the solution is different than the stored solution, therefore, the win is not recognised 
+    - **Solution**: need to run the validation algo instead to verify if it is correct instead of using the stored solution as it may not be the only solution
