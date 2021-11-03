@@ -84,15 +84,9 @@ export default function Board({
 
   // add or remove ac.i from conflict cells
   useEffect(() => {
-    // 1. add ac.i to conflict cells
-
-
-    // console.log("bd[idx].v", bd[idx].v, "ac.v", ac.v);
-
-    // 2. remove ac.i from conflict cells
     // 感觉似乎是要使用到history功能才可以，因为要追踪之前的ac.v
 
-    // create conflictCells array
+    // 1. create conflictCells array
     const conflictCells = sudoku.filter((cell) => {
       const idx1 = idToIndex((cell as HTMLDivElement).id);
       const v1 = bd[idx1].v;
@@ -102,15 +96,17 @@ export default function Board({
       return type2 === "user" && v1 === v2 && v1 !== 0;
     });
     console.log("😱", conflictCells);
-    // fill conflict array
-    conflictCells.forEach((cell) => {
-      const idx = idToIndex((cell as HTMLDivElement).id);
-      // conflict cell is in conflict with ac, therefore, put ac.i into the cell's conflict array
-      if (!bd[idx].conflict.includes(ac.i)) bd[idx].conflict.push(ac.i);
-    });
-    console.log("😱", getAllConflictCells());
+    // 2. fill conflict array
+    if (conflictCells.length > 1) {
+      conflictCells.forEach((cell) => {
+        const idx = idToIndex((cell as HTMLDivElement).id);
+        // conflict cell is in conflict with ac, therefore, put ac.i into the cell's conflict array
+        if (!bd[idx].conflict.includes(ac.i)) bd[idx].conflict.push(ac.i);
+      });
+    }
+
     console.log(bd);
-    // remove ac.i from conflict cells
+    // 3. remove ac.i from conflict cells
     const allConflictCells = getAllConflictCells();
     allConflictCells.forEach((cell) => {
       const idx = idToIndex((cell as HTMLDivElement).id);
@@ -123,9 +119,11 @@ export default function Board({
           arr[i] = -1;
         }
       });
+      // ⛔️ This could be the problem, as I don't think I should be changing the state directly without using dispatch
       bd[idx].conflict = conArr.filter((v) => v >= 0);
     });
-
+    console.log("😱", getAllConflictCells());
+    // 4. highlight conflict cells
     hlConflict();
   }, [bd]);
 
