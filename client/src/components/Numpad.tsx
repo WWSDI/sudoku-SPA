@@ -18,8 +18,6 @@ export default function Numpad({
         const numVal = Number((e.target as HTMLDivElement).id);
         console.log("Number button value:", numVal, "ac.v:", ac.v);
         setKeypress(true);
-        // ❗️ should change this to click on the numpad then change the bd
-        //setAc({ ...ac, v });
 
         bdDispatch({ type: "SET_CELL_VALUE", payload: { v: numVal } });
       }}

@@ -19,13 +19,15 @@ let initSolution = [
   5, 4, 9,
 ];
 
-
 export default function Game() {
   const [puzzle, setPuzzle] = useState(initPuzzle);
   const [solution, setSolution] = useState(initSolution);
-  const [ac, setAc] = useState<AC>({ i: 0, v: 0 });
+  const [ac, setAc] = useState<AC>(
+    JSON.parse(localStorage.getItem("ac") as string) || { i: 0, v: 0 },
+  );
   // keypress state is for solving the click ac and the user filled number disappear bug; delete this if no longer userful
   const [keypress, setKeypress] = useState(false);
+  const [won, setWon] = useState(false);
   // bd is state
   // 🔨
   const bdReducer = (bd: BdType, action: actionType) => {
@@ -64,8 +66,10 @@ export default function Game() {
         throw new Error("Unhandled action type: " + action.type);
     }
   };
-  const [bd, bdDispatch] = useReducer(bdReducer, makeBd(puzzle));
-  const [won, setWon] = useState(false);
+  const [bd, bdDispatch] = useReducer(
+    bdReducer,
+    JSON.parse(localStorage.getItem("bd") as string) || makeBd(puzzle),
+  );
 
   return (
     <div className="game">

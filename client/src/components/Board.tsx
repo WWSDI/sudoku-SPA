@@ -85,8 +85,11 @@ export default function Board({
   // 3. highlight same num, conflict when bd chagnes
   useEffect(() => {
     if (didIWin()) setWon(true);
-    console.log("WON:",won);
-  }, [bd, won]);
+    // console.log("WON:", won);
+    // every time bd changes, store bd, ac to localStorage
+    localStorage.setItem("bd", JSON.stringify(bd));
+    localStorage.setItem("ac", JSON.stringify(ac));
+  }, [bd]);
 
   // 😱😱😱 之前的版本，暂时不用
   // useEffect(() => {
