@@ -20,6 +20,15 @@ export default function Board({
 }: BoardProps): JSX.Element {
   const [sudoku, setSudoku] = useState<Element[]>([]);
 
+  const getSudokuVals = (sudoku: Element[]) => {
+    const sudokuVals = [];
+    for (let i = 0; i < sudoku.length; i++) {
+      const idx = idToIndex(sudoku[i].id)
+      sudokuVals.push(bd[idx].v);
+    }
+    return sudokuVals;
+  };
+
   // Remove highlight of sudoku, ac and same num
   const remove3Hl = () => {
     const allCells = document.querySelectorAll(".Cell");
@@ -82,9 +91,29 @@ export default function Board({
     setSudoku(getSudoku(ac.i));
   }, [ac]);
 
+  // 2. highlight sudoku, ac, same num
+  useEffect(() => {
+    // remove highlight of sudoku, ac and same num
+    remove3Hl();
+    // add new highlight of sudoku, ac and same num
+    hlSudoku(ac.i);
+    hlSameNum(ac.i);
+    hlAC(ac.i);
+
+    console.log("sudokuVal", getSudokuVals(sudoku))
+    // hlConflict();
+    // hlConflict(ac.i);
+    // console.log("CELL:", bd[ac.i]);
+  }, [bd, sudoku]); // ignore the dependency warning
+
   // add or remove ac.i from conflict cells
   useEffect(() => {
     // 感觉似乎是要使用到history功能才可以，因为要追踪之前的ac.v
+
+    // 🌸 这个部分逻辑真的很难写。我应该写一些util函数，简化操作
+    const acIdx = ac.i;
+    const acVal = bd[acIdx].v;
+    const getConflictCells = (activeCellIndex: number) => {};
 
     // 1. create conflictCells array
     const conflictCells = sudoku.filter((cell) => {
@@ -109,36 +138,33 @@ export default function Board({
     // 3. remove ac.i from conflict cells
     const allConflictCells = getAllConflictCells();
     allConflictCells.forEach((cell) => {
-      const idx = idToIndex((cell as HTMLDivElement).id);
-      const cellVal = bd[idx].v;
+      const cellIdx = idToIndex((cell as HTMLDivElement).id);
+      const cellVal = bd[cellIdx].v;
 
-      const conArr = bd[idx].conflict;
+      const conArr = bd[cellIdx].conflict;
       conArr.forEach((conIdx, i, arr) => {
         const conCellVal = bd[conIdx].v;
         if (cellVal !== conCellVal || conCellVal === 0) {
           arr[i] = -1;
         }
+        // 🐞🐞🐞
+        // 加入这一个判断，专门用作去除和自身比较的情况
+        // ⛔️ !!! 问题在于会取消自身高亮，即便在其他cell仍然高亮的时候
+        // if (cellIdx === conIdx 
+        //   // 
+        //   && !getSudokuVals(sudoku).includes(cellVal)
+        //   ) {
+        //   arr[i] = -1;
+        // }
       });
       // ⛔️ This could be the problem, as I don't think I should be changing the state directly without using dispatch
-      bd[idx].conflict = conArr.filter((v) => v >= 0);
+      bd[cellIdx].conflict = conArr.filter((v) => v >= 0);
     });
     console.log("😱", getAllConflictCells());
+
     // 4. highlight conflict cells
     hlConflict();
   }, [bd]);
-
-  // 2. highlight sudoku, ac, same num
-  useEffect(() => {
-    // remove highlight of sudoku, ac and same num
-    remove3Hl();
-    // add new highlight of sudoku, ac and same num
-    hlSudoku(ac.i);
-    hlSameNum(ac.i);
-    hlAC(ac.i);
-    // hlConflict();
-    // hlConflict(ac.i);
-    // console.log("CELL:", bd[ac.i]);
-  }, [bd, sudoku]); // ignore the dependency warning
 
   // 3. highlight conflict when bd chagnes
   useEffect(() => {
