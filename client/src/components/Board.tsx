@@ -91,20 +91,6 @@ export default function Board({
     localStorage.setItem("ac", JSON.stringify(ac));
   }, [bd]);
 
-  // 😱😱😱 之前的版本，暂时不用
-  // useEffect(() => {
-  //   // TODO: change css for cells based on cell type when bd changes
-  //   console.log("ac.v:", ac.v);
-  //   bdDispatch({ type: "SET_AC", payload: { ...ac } });
-  //   // 1. hl conflict cells
-
-  //   // 2. hl error (AC could be error if in conflict of )
-  //   // 3. change bd based on ac
-  //   return () => {
-  //     setKeypress(false);
-  //   };
-  // }, [ac, bdDispatch, keypress, setKeypress]);
-
   return (
     <div
       className="Board"

@@ -1,7 +1,8 @@
 .Board {
+  margin: 0 auto;
   display: grid;
   grid-template-columns: repeat(9, 3rem);
   border: 3px solid black;
-  justify-content:center;
-  width:27rem;
+  justify-content: center;
+  width: 27rem;
 }

@@ -1,3 +1,4 @@
+import "./Game.css"
 import { useReducer, useState } from "react";
 import makeBd from "../lib/makeBd";
 import { AC, actionType, BdType, CellType } from "../lib/types";
@@ -72,7 +73,7 @@ export default function Game() {
   );
 
   return (
-    <div className="game">
+    <div className="Game">
       <GameController />
       <Board
         bd={bd}
@@ -84,8 +85,9 @@ export default function Game() {
         won={won}
         setWon={setWon}
       />
+      {/* <BoardController /> */}
       {won ? (
-        <div>
+        <div className="congrats">
           <p>🎊🥳🎉</p>
           <p>You Won!</p>
           <p>🎊🍾🥂</p>

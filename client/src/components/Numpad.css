@@ -1,9 +1,29 @@
 .Numpad {
-  display:grid;
-  grid-gap: .7rem;
+  display: grid;
+  grid-gap: 0.7rem;
   grid-template-columns: repeat(3, 1fr);
   color: cornflowerblue;
   font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
-  font-size:3rem;
-  margin-top: 2rem; 
+  font-size: 3rem;
+  margin-top: 2rem;
+}
+
+.congrats {
+  font-size: 3rem;
+}
+
+.congrats p {
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+}
+
+
+@keyframes jump {
+  0% { transform: translate(-50%, -50%) scale(1.25, 0.75); }
+  50% { transform: translate(-50%, -150%) scale(1, 1); }
+  55% { transform: translate(-50%, -150%) rotate(15deg); }
+  60% { transform: translate(-50%, -150%) rotate(-15deg); }
+  65% { transform: translate(-50%, -150%) rotate(15deg); }
+  70% { transform: translate(-50%, -150%) rotate(-15deg); }
+  100% { transform: translate(-50%, -50%) scale(1.25, 0.75); }
 }

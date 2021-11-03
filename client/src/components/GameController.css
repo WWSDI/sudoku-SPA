@@ -1,0 +1,25 @@
+.GameController {
+  display: flex;
+  font-size: 1.5rem;
+  justify-content: space-between;
+}
+
+select {
+  border: 1px blue solid;
+}
+
+#new-game {
+  border-radius: 0.5rem;
+  background-color: goldenrod;
+  padding: 1rem;
+}
+#new-game:hover, #new-game:focus {
+  background-color: rgb(235, 193, 86);
+  cursor: pointer;
+}
+#new-game:active {
+  background-color: rgb(255, 231, 97);
+}
+
+.label {
+}
