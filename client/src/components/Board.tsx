@@ -3,6 +3,7 @@ import "./Board.css";
 import { CellType, BdType, BoardProps } from "../lib/types";
 import { useEffect, useState } from "react";
 import { getSudoku, idToIndex, idxToij, indexToSelector } from "../util/util";
+import makeBd from "../lib/makeBd";
 
 // Highlighting
 
@@ -15,6 +16,7 @@ export default function Board({
   setKeypress,
   won,
   setWon,
+  puzzle,
 }: BoardProps): JSX.Element {
   const [sudoku, setSudoku] = useState<Element[]>([]);
 
@@ -66,6 +68,8 @@ export default function Board({
     return true;
   };
 
+  
+
   // 1. update sudoku
   useEffect(() => {
     setSudoku(getSudoku(ac.i));
@@ -89,7 +93,17 @@ export default function Board({
     // every time bd changes, store bd, ac to localStorage
     localStorage.setItem("bd", JSON.stringify(bd));
     localStorage.setItem("ac", JSON.stringify(ac));
-  }, [bd]);
+    console.log(
+      "🌸",
+      "localStorage.ac:",
+      localStorage.ac,
+      "localStorage.bd:",
+      localStorage.bd.substr(
+        localStorage.bd.length - 41,
+        localStorage.bd.length,
+      ),
+    );
+  }, [bd, ac]);
 
   return (
     <div

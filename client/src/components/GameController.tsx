@@ -1,9 +1,11 @@
 import { useState } from "react";
-import { Puzzle } from "../lib/types";
+import { BoardProps, Puzzle } from "../lib/types";
 import { fetchPuzzles, storeFetchedPuzzles } from "../lib/localStorage";
 import "./GameController.css";
 import { setTokenSourceMapRange } from "typescript";
-export default function GameController() {
+import makeBd from "../lib/makeBd";
+
+export default function GameController({ setPuzzle, setSolution, bdDispatch }: BoardProps) {
   const [difficulty, setDifficulty] = useState("easy");
 
   const startNewGame = () => {
@@ -11,7 +13,7 @@ export default function GameController() {
 
     let data = localStorage.getItem(`puzzles-${difficulty}`);
     // This is not the best solution as the wait time is arbitrarily set, but I don't know how to make this cb() wait for the if statement to execute and store all fetched data to localstorage first
-    
+
     if (data === "null") {
       (async () => {
         // if no more local storage puzzles, then fetch and store
@@ -32,7 +34,12 @@ export default function GameController() {
 
       console.log(newPuzzle, newSolution);
 
-      // use newPuzzle, newSolution to set the state of the game
+      // 👹 use newPuzzle, newSolution to set the state of the game
+      localStorage.setItem("ac", JSON.stringify(null));
+      localStorage.setItem("bd", JSON.stringify(null));
+      setPuzzle(newPuzzle);
+      setSolution(newSolution);
+      bdDispatch({ type: "START_NEW_GAME", payload: { bd: makeBd(newPuzzle) } });
 
       // save the popped localPuzzles back to localStorage
       if (localPuzzles.length === 0) {

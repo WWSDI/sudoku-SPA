@@ -1,4 +1,4 @@
-import "./Game.css"
+import "./Game.css";
 import { useReducer, useState } from "react";
 import makeBd from "../lib/makeBd";
 import { AC, actionType, BdType, CellType } from "../lib/types";
@@ -29,44 +29,46 @@ export default function Game() {
   // keypress state is for solving the click ac and the user filled number disappear bug; delete this if no longer userful
   const [keypress, setKeypress] = useState(false);
   const [won, setWon] = useState(false);
-  // bd is state
-  // 🔨
   const bdReducer = (bd: BdType, action: actionType) => {
     switch (action.type) {
       case "SET_CELL_VALUE":
-        const newBd = [...bd];
+        const newBd1 = [...bd];
         const i = ac.i;
         const v = action.payload.v;
         //console.log(i, v);
 
         if (v !== undefined) {
-          newBd[i] = { ...bd[i] };
+          newBd1[i] = { ...bd[i] };
           if (bd[i].type === "user") {
             // if cell is empty, fill new value;
             if (bd[i].v !== v) {
-              newBd[i].v = v;
+              newBd1[i].v = v;
               // if new value is different than solution value, set error to true
               if (v !== solution[i]) {
-                newBd[i].error = true;
+                newBd1[i].error = true;
               } else {
-                newBd[i].error = false;
+                newBd1[i].error = false;
               }
             }
             //if given the same value as filled value, empty the cell
             else if (bd[i].v === v) {
-              newBd[i].v = 0;
-              newBd[i].error = false;
+              newBd1[i].v = 0;
+              newBd1[i].error = false;
             }
           }
         }
-
-        return newBd;
+        return newBd1;
+      case "START_NEW_GAME":
+        const newBd2 = action.payload.bd;
+        if (newBd2 !== undefined) return newBd2;
+        else return bd;
       // case "CLEAR_CELL_VALUE":
       //   return;
       default:
         throw new Error("Unhandled action type: " + action.type);
     }
   };
+  console.log('👹',localStorage.bd)
   const [bd, bdDispatch] = useReducer(
     bdReducer,
     JSON.parse(localStorage.getItem("bd") as string) || makeBd(puzzle),
@@ -74,7 +76,20 @@ export default function Game() {
 
   return (
     <div className="Game">
-      <GameController />
+      <GameController
+        bd={bd}
+        bdDispatch={bdDispatch}
+        ac={ac}
+        setAc={setAc}
+        keypress={keypress}
+        setKeypress={setKeypress}
+        won={won}
+        setWon={setWon}
+        puzzle={puzzle}
+        setPuzzle={setPuzzle}
+        solution={solution}
+        setSolution={setSolution}
+      />
       <Board
         bd={bd}
         bdDispatch={bdDispatch}
@@ -84,6 +99,10 @@ export default function Game() {
         setKeypress={setKeypress}
         won={won}
         setWon={setWon}
+        puzzle={puzzle}
+        setPuzzle={setPuzzle}
+        solution={solution}
+        setSolution={setSolution}
       />
       {/* <BoardController /> */}
       {won ? (
@@ -102,6 +121,10 @@ export default function Game() {
           setKeypress={setKeypress}
           won={won}
           setWon={setWon}
+          puzzle={puzzle}
+          setPuzzle={setPuzzle}
+          solution={solution}
+          setSolution={setSolution}
         />
       )}
     </div>

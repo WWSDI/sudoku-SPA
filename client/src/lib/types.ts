@@ -13,6 +13,7 @@ export type actionType = {
     i?: number;
     v?: number;
     type?: "auto" | "user";
+    bd?: BdType;
   };
 };
 export interface BoardProps {
@@ -29,6 +30,10 @@ export interface BoardProps {
   setKeypress: React.Dispatch<React.SetStateAction<boolean>>;
   won: boolean;
   setWon: React.Dispatch<React.SetStateAction<boolean>>;
+  puzzle: number[];
+  setPuzzle: React.Dispatch<React.SetStateAction<number[]>>;
+  solution: number[];
+  setSolution: React.Dispatch<React.SetStateAction<number[]>>;
 }
 export interface NumpadProps extends BoardProps {}
 
