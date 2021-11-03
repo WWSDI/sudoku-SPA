@@ -19,15 +19,31 @@ import { SolutionModel } from "../models/SolutionModel";
 
 // console.log("😀", AllSolutions100.length, AllSolutions100[1]);
 
+
+
+// ⭐️ Official difficulty
+// const lookupDifficulty = {
+//   easy: {
+//     numZero: 35,
+//   },
+//   medium: {
+//     numZero: 45,
+//   },
+//   hard: {
+//     numZero: 55,
+//   },
+// };
+
+// Testing difficulty
 const lookupDifficulty = {
   easy: {
-    numZero: 40,
+    numZero: 10,
   },
   medium: {
-    numZero: 50,
+    numZero: 20,
   },
   hard: {
-    numZero: 60,
+    numZero: 30,
   },
 };
 

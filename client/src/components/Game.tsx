@@ -68,7 +68,6 @@ export default function Game() {
         throw new Error("Unhandled action type: " + action.type);
     }
   };
-  console.log('👹',localStorage.bd)
   const [bd, bdDispatch] = useReducer(
     bdReducer,
     JSON.parse(localStorage.getItem("bd") as string) || makeBd(puzzle),

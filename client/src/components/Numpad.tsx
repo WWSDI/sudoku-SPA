@@ -17,8 +17,6 @@ export default function Numpad({
         // the id is of the same value as the number button
         const numVal = Number((e.target as HTMLDivElement).id);
         console.log("Number button value:", numVal, "ac.v:", ac.v);
-        // setKeypress(true);
-
         bdDispatch({ type: "SET_CELL_VALUE", payload: { v: numVal } });
       }}
     >

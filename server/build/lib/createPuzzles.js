@@ -53,15 +53,27 @@ var SolutionModel_1 = require("../models/SolutionModel");
 //   return solutions;
 // };
 // console.log("😀", AllSolutions100.length, AllSolutions100[1]);
+// Official difficulty
+// const lookupDifficulty = {
+//   easy: {
+//     numZero: 35,
+//   },
+//   medium: {
+//     numZero: 45,
+//   },
+//   hard: {
+//     numZero: 55,
+//   },
+// };
 var lookupDifficulty = {
     easy: {
-        numZero: 40,
+        numZero: 10,
     },
     medium: {
-        numZero: 50,
+        numZero: 20,
     },
     hard: {
-        numZero: 60,
+        numZero: 30,
     },
 };
 var getRanSolutionsMongo = function (numSolutions) { return __awaiter(void 0, void 0, void 0, function () {
