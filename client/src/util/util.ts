@@ -1,3 +1,8 @@
+import { CellType } from './../lib/types';
+import { BdType } from "../lib/types";
+import Cell from '../components/Cell';
+import validateSolution from './sudokuValidator';
+
 // ⭐️ convert index to [i,j]
 export const idxToij = (idx: number): [number, number] => [
   Math.floor(idx / 9),
@@ -31,3 +36,15 @@ export const indexToSelector = (index: number) =>
   "#C" + String(index).padStart(2, "0");
 
 export const idToIndex = (id: string) => parseInt(id.substr(1));
+
+export const get2DSolutionFromBd = (bd: BdType) => {
+  const solution1D = bd.map( (cell:CellType) => cell.v);
+  const solution2D: number[][] = Array.from({length:9}, () => Array(9).fill([]))
+
+  for(let i = 0; i < 9; i++) {
+    for(let j = 0; j < 9; j++) {
+      solution2D[i].push(solution1D[i+j]);
+    }
+  }
+  return validateSolution(solution2D);
+};
