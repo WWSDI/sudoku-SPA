@@ -133,6 +133,7 @@ solutions collection document structure:
 - [] highlight conflict bug
   - if ac is in conflict, even after changing the num and resolving the conflict, ac is still highlighted
   - VERY HARD, don't know how to fix yet
+  - **Possible solution:** extract the logic of useEffect() highlight part, and put that in a new action in reducer; use bdDispatch to perform the changing conflict state part, then use a single hlconflict() to light up all conflict cells  
 - [x] win bug
   - user solved a puzzle, yet the solution is different than the stored solution, therefore, the win is not recognised 
     - **Solution**: need to run the validation algo instead to verify if it is correct instead of using the stored solution as it may not be the only solution
