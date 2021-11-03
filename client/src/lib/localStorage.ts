@@ -11,7 +11,7 @@ export const fetchPuzzles = async () => {
   }
 };
 
-export const storeFetchedPuzzles = async (puzzles: Puzzles) => {
+export const storeFetchedPuzzles = (puzzles: Puzzles) => {
   ["easy", "medium", "hard"].forEach((difficulty) => {
     localStorage.setItem(
       `puzzles-${difficulty}`,

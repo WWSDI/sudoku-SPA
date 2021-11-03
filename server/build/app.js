@@ -57,7 +57,7 @@ app.get("/puzzles", function (req, res) { return __awaiter(void 0, void 0, void 
                 console.log(solutions);
                 result = createPuzzleSolutionSets(solutions);
                 // 3. send the puzzles & solutions to the client
-                res.send({ solutions: result });
+                res.send({ puzzles: result });
                 return [2 /*return*/];
         }
     });
