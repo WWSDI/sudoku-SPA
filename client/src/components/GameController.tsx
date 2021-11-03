@@ -5,7 +5,7 @@ import "./GameController.css";
 import { setTokenSourceMapRange } from "typescript";
 import makeBd from "../lib/makeBd";
 
-export default function GameController({ setPuzzle, setSolution, bdDispatch }: BoardProps) {
+export default function GameController({ setPuzzle, setSolution, bdDispatch,setWon }: BoardProps) {
   const [difficulty, setDifficulty] = useState("easy");
 
   const startNewGame = () => {
@@ -40,6 +40,7 @@ export default function GameController({ setPuzzle, setSolution, bdDispatch }: B
       setPuzzle(newPuzzle);
       setSolution(newSolution);
       bdDispatch({ type: "START_NEW_GAME", payload: { bd: makeBd(newPuzzle) } });
+      setWon(false)
 
       // save the popped localPuzzles back to localStorage
       if (localPuzzles.length === 0) {
