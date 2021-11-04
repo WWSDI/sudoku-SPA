@@ -1,16 +1,27 @@
 .GameController {
   display: flex;
-  font-size: 1.5rem;
-  justify-content: space-between;
+  font-size: 1.3rem;
+  justify-content: space-around;
+  align-items: center;
+  width: 27rem;
+  margin: 0 auto;
+  margin-bottom: 2rem;
+}
+
+label{
+  display: grid;
+  grid-template-columns: 1fr;
+
 }
 
 select {
-  border: 1px blue solid;
+  /* border: 1px blue solid; */
+  font-size: 1.1rem; 
 }
 
 #new-game {
   border-radius: 0.5rem;
-  background-color: goldenrod;
+  background-color: gold; 
   padding: 1rem;
 }
 #new-game:hover, #new-game:focus {
@@ -18,8 +29,7 @@ select {
   cursor: pointer;
 }
 #new-game:active {
-  background-color: rgb(255, 231, 97);
+  background-color: goldenrod;
 }
 
-.label {
-}
+.time{}

@@ -76,7 +76,7 @@ export default function GameController({ setPuzzle, setSolution, bdDispatch,setW
         New Game
       </div>
       {/* This one needs to use conflict <div>Show Mistakes</div> */}
-      <div className="label">total time: </div>
+      <div className="time">Time: </div>
     </div>
   );
 }
