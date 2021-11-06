@@ -11,10 +11,9 @@ export default function GameController({ setPuzzle, setSolution, bdDispatch,setW
   const startNewGame = () => {
     console.log(difficulty);
 
-    let data = localStorage.getItem(`puzzles-${difficulty}`);
     // This is not the best solution as the wait time is arbitrarily set, but I don't know how to make this cb() wait for the if statement to execute and store all fetched data to localstorage first
 
-    if (data === "null") {
+    if (!localStorage.getItem(`puzzles-${difficulty}`)) {
       (async () => {
         // if no more local storage puzzles, then fetch and store
         const puzzles = await fetchPuzzles();
@@ -25,6 +24,7 @@ export default function GameController({ setPuzzle, setSolution, bdDispatch,setW
       })();
     }
 
+    let data = localStorage.getItem(`puzzles-${difficulty}`);
     setTimeout(() => {
       let localPuzzles = JSON.parse(data as string);
       console.log("Parsed Puzzles:", localPuzzles);
