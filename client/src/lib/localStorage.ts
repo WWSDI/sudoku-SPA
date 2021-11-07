@@ -1,6 +1,7 @@
 import { Puzzles, Difficulty } from "./types";
 
 export const fetchPuzzles = async () => {
+  console.log(`fetching puzzles from ${process.env.API_URL}/puzzles`)
   const response = await fetch(`${process.env.API_URL}/puzzles`);
   if (response.ok) {
     const puzzles: Puzzles = await response.json();
