@@ -19,8 +19,6 @@ import { SolutionModel } from "../models/SolutionModel";
 
 // console.log("😀", AllSolutions100.length, AllSolutions100[1]);
 
-
-
 // ⭐️ Official difficulty
 // const lookupDifficulty = {
 //   easy: {
@@ -36,14 +34,20 @@ import { SolutionModel } from "../models/SolutionModel";
 
 // Testing difficulty
 const lookupDifficulty = {
-  easy: {
+  test: {
     numZero: 10,
   },
+  easy: {
+    numZero: 35,
+  },
   medium: {
-    numZero: 20,
+    numZero: 45,
   },
   hard: {
-    numZero: 30,
+    numZero: 55,
+  },
+  hell: {
+    numZero: 60,
   },
 };
 
@@ -70,7 +74,7 @@ const nonrepeatRanNums = (ceil: number, numZero: number): number[] => {
 
   return Array.from(zeroIndice).sort((a, b) => a - b);
 };
-type Difficulty = "easy" | "medium" | "hard";
+type Difficulty = "test" | "easy" | "medium" | "hard" | "hell";
 const createPuzzle = (
   sudokuSolution: number[],
   difficulty: Difficulty,
@@ -93,9 +97,11 @@ interface PuzzleSolution {
   solution: number[];
 }
 interface AllDifficultyPuzzleSolution {
+  test: PuzzleSolution[];
   easy: PuzzleSolution[];
   medium: PuzzleSolution[];
   hard: PuzzleSolution[];
+  hell: PuzzleSolution[];
 }
 
 const createPuzzleSolutionSets = (
@@ -105,12 +111,20 @@ const createPuzzleSolutionSets = (
 
   const numPuzzles = sudokuSolutions.length;
   const result: AllDifficultyPuzzleSolution = {
+    test: [],
     easy: [],
     medium: [],
     hard: [],
+    hell: [],
   };
 
-  const allDifficulty: ["easy", "medium", "hard"] = ["easy", "medium", "hard"];
+  const allDifficulty: ["test", "easy", "medium", "hard", "hell"] = [
+    "test",
+    "easy",
+    "medium",
+    "hard",
+    "hell",
+  ];
 
   allDifficulty.forEach((difficulty: Difficulty) => {
     for (let i = 0; i < numPuzzles; i++) {

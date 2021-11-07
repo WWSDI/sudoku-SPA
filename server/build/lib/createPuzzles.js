@@ -53,7 +53,7 @@ var SolutionModel_1 = require("../models/SolutionModel");
 //   return solutions;
 // };
 // console.log("😀", AllSolutions100.length, AllSolutions100[1]);
-// Official difficulty
+// ⭐️ Official difficulty
 // const lookupDifficulty = {
 //   easy: {
 //     numZero: 35,
@@ -65,15 +65,22 @@ var SolutionModel_1 = require("../models/SolutionModel");
 //     numZero: 55,
 //   },
 // };
+// Testing difficulty
 var lookupDifficulty = {
-    easy: {
+    test: {
         numZero: 10,
     },
+    easy: {
+        numZero: 35,
+    },
     medium: {
-        numZero: 20,
+        numZero: 45,
     },
     hard: {
-        numZero: 30,
+        numZero: 55,
+    },
+    hell: {
+        numZero: 60,
     },
 };
 var getRanSolutionsMongo = function (numSolutions) { return __awaiter(void 0, void 0, void 0, function () {
@@ -126,11 +133,19 @@ var createPuzzleSolutionSets = function (sudokuSolutions) {
     // const solutions = getRanSolutionsMongo(100);
     var numPuzzles = sudokuSolutions.length;
     var result = {
+        test: [],
         easy: [],
         medium: [],
         hard: [],
+        hell: [],
     };
-    var allDifficulty = ["easy", "medium", "hard"];
+    var allDifficulty = [
+        "test",
+        "easy",
+        "medium",
+        "hard",
+        "hell",
+    ];
     allDifficulty.forEach(function (difficulty) {
         for (var i = 0; i < numPuzzles; i++) {
             var puzzle = createPuzzle(sudokuSolutions[i], difficulty);

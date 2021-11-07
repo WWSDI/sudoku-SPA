@@ -1,15 +1,13 @@
 import Cell from "./Cell";
 import "./Board.css";
-import { CellType, BdType, BoardProps } from "../lib/types";
+import { CellType, BoardProps } from "../lib/types";
 import { useEffect, useState } from "react";
 import {
   get2DSolutionFromBd,
   getSudoku,
   idToIndex,
-  idxToij,
   indexToSelector,
 } from "../util/util";
-import makeBd from "../lib/makeBd";
 import validateSolution from "../util/sudokuValidator";
 
 // Highlighting
@@ -27,14 +25,7 @@ export default function Board({
 }: BoardProps): JSX.Element {
   const [sudoku, setSudoku] = useState<Element[]>([]);
 
-  const getSudokuVals = (sudoku: Element[]) => {
-    const sudokuVals = [];
-    for (let i = 0; i < sudoku.length; i++) {
-      const idx = idToIndex(sudoku[i].id);
-      sudokuVals.push(bd[idx].v);
-    }
-    return sudokuVals;
-  };
+  
 
   // Remove highlight of sudoku, ac and same num
   const remove3Hl = () => {

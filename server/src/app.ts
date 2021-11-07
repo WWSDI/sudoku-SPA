@@ -17,14 +17,13 @@ app.get("/", (req: Request, res: Response) => {
 
 // GET 10 puzzles for each difficulty, send to the client and to be saved in local storage
 app.get("/puzzles", async (req: Request, res: Response) => {
-  const solutions = await getRanSolutionsMongo(10);
-  // console.log(solutions);
+  const solutions = await getRanSolutionsMongo(3);
+  if (solutions) console.log("sending fetched solutions to client", solutions);
 
   // 2. create puzzles based on the solutions
   const result = createPuzzleSolutionSets(solutions);
 
   // 3. send the puzzles & solutions to the client
-
   res.send({ puzzles: result });
 });
 

@@ -51,10 +51,11 @@ app.get("/puzzles", function (req, res) { return __awaiter(void 0, void 0, void 
     var solutions, result;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, getRanSolutionsMongo(10)];
+            case 0: return [4 /*yield*/, getRanSolutionsMongo(3)];
             case 1:
                 solutions = _a.sent();
-                console.log(solutions);
+                if (solutions)
+                    console.log("sending fetched solutions to client", solutions);
                 result = createPuzzleSolutionSets(solutions);
                 // 3. send the puzzles & solutions to the client
                 res.send({ puzzles: result });

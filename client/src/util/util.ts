@@ -1,7 +1,5 @@
 import { CellType } from "./../lib/types";
 import { BdType } from "../lib/types";
-import Cell from "../components/Cell";
-import validateSolution from "./sudokuValidator";
 
 // ⭐️ convert index to [i,j]
 export const idxToij = (idx: number): [number, number] => [

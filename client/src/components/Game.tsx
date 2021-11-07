@@ -1,7 +1,7 @@
 import "./Game.css";
 import { useReducer, useState } from "react";
 import makeBd from "../lib/makeBd";
-import { AC, actionType, BdType, CellType } from "../lib/types";
+import { AC, actionType, BdType, } from "../lib/types";
 import Board from "./Board";
 import BoardController from "./BoardController";
 import GameController from "./GameController";

@@ -5,7 +5,7 @@ export type CellType = {
   i: number;
   type: "auto" | "user";
   error: boolean;
-  conflict: boolean // index of cells that are conflicting
+  conflict: boolean; // index of cells that are conflicting
 };
 export type BdType = CellType[];
 export type actionType = {
@@ -44,9 +44,11 @@ export type Puzzle = {
 };
 export type Puzzles = {
   puzzles: {
+    test: Puzzle[];
     easy: Puzzle[];
     medium: Puzzle[];
     hard: Puzzle[];
+    hell: Puzzle[];
   };
 };
-export type Difficulty = "easy" | "medium" | "hard";
+export type Difficulty = "test" | "easy" | "medium" | "hard" | "hell";

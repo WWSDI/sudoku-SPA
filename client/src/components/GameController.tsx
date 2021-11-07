@@ -2,7 +2,6 @@ import { useState } from "react";
 import { BoardProps, Puzzle } from "../lib/types";
 import { fetchPuzzles, storeFetchedPuzzles } from "../lib/localStorage";
 import "./GameController.css";
-import { setTokenSourceMapRange } from "typescript";
 import makeBd from "../lib/makeBd";
 
 export default function GameController({
@@ -24,6 +23,7 @@ export default function GameController({
     );
 
     if (
+      localStorage.getItem(`puzzles-${difficulty}`) === null ||
       localStorage.getItem(`puzzles-${difficulty}`) === "null" ||
       localStorage.getItem(`puzzles-${difficulty}`) === undefined
     ) {
@@ -68,7 +68,7 @@ export default function GameController({
         );
       }
       console.log(localStorage.getItem(`puzzles-${difficulty}`));
-    }, 500);
+    }, 200);
   };
 
   return (
@@ -83,9 +83,11 @@ export default function GameController({
             setDifficulty(e.target.value);
           }}
         >
+          <option value="test">Test</option>
           <option value="easy">Easy</option>
           <option value="medium">Medium</option>
           <option value="hard">Hard</option>
+          <option value="hell">Hell</option>
         </select>
       </label>
       <div id="new-game" onClick={startNewGame}>
