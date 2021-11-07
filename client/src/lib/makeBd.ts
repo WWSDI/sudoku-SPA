@@ -5,7 +5,7 @@ const makeCell = (v: number, i: number): CellType => ({
   i,
   type: v !== 0 ? "auto" : "user",
   error: false,
-  conflict: []
+  conflict: false,
 });
 const makeBd = (puzzle: number[]) => puzzle.map(makeCell);
 

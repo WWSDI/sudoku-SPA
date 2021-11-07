@@ -58,67 +58,28 @@ export default function Game() {
               newBd1[i].error = false;
             }
           }
-          // 2. Change conflict arr based on cell value change
-          const sudokuIndicesNoAc = getSudokuIndices(i).filter(
-            (idx) => idx !== i,
+          // 2. create non-zero sudoku arr (plus ac); loop through the array and decide conflict state for each cell based own it's own sudoku cell values
+          const nonZeroSudoku = getSudokuIndices(i).filter(
+            (idx) => newBd1[idx].v !== 0 || idx === i,
           );
-          // 2.1 change conflict arr for sudoku cells (bar the ac)
-          let conflictFlag = false;
-          newBd1 = newBd1.map((cell, idx, val) => {
-            if (sudokuIndicesNoAc.includes(idx)) {
-              // 2.1.1 add i to conflict arr
-              if (bd[idx].v !== 0 && cell.v === newBd1[i].v) {
-                conflictFlag = true;
-                const newConflict = [...cell.conflict];
-                newConflict.push(i);
-                return { ...cell, conflict: newConflict };
-              } else {
-                return cell;
-              }
+          console.log("🌸nonZeroSudoku", nonZeroSudoku);
+          const conflicts: [number, boolean][] = nonZeroSudoku.map((idx) => {
+            const sudoku = getSudokuIndices(idx);
+            const sameValueCells = sudoku.filter(
+              (idx2) => newBd1[idx2].v === newBd1[idx].v && newBd1[idx].v !== 0,
+            );
+            console.log("🌸sameValueCells", sameValueCells);
+            return [idx, sameValueCells.length > 1];
+          });
+          console.log("🌸conlifcts", conflicts);
+          conflicts.forEach(([idx, isConflict]) => {
+            if (isConflict) {
+              newBd1[idx].conflict = true;
             } else {
-              return cell;
+              newBd1[idx].conflict = false;
             }
           });
-
-          // 2.1.2 calculate ac's conflict status based on other sudokuCell's conflict arr
-          if (conflictFlag) {
-            // change the ac's conflict status
-            const newConflict = [...newBd1[i].conflict];
-            newConflict.push(i);
-            newBd1[i].conflict = newConflict;
-          }
-
-          // 2.2 remove i from conflict arr
-          let deconflictFlag = false;
-          newBd1 = newBd1.map((cell, idx, val) => {
-            // 2.2.1
-            if (sudokuIndicesNoAc.includes(idx)) {
-              if (cell.conflict.includes(i) && cell.v !== newBd1[i].v) {
-                deconflictFlag = true;
-                return {
-                  ...cell,
-                  conflict: cell.conflict.filter((idx) => idx !== i),
-                };
-              } else {
-                return cell;
-              }
-            } else {
-              return cell;
-            }
-          });
-          // 2.2.2 calculate ac's conflict status based on other sudokuCell's conflict arr
-          if (newBd1[i].v === 0) {
-            newBd1[i].conflict = [];
-          }
-          if (deconflictFlag) {
-            // change the ac's conflict status
-            const newConflict = [...newBd1[i].conflict];
-            const index = newConflict.findIndex((idx) => idx !== i);
-            newConflict.splice(index, 1);
-            newBd1[i].conflict = newConflict;
-          }
         }
-        console.log(newBd1.filter((cell) => cell.conflict.length > 0));
         return newBd1;
       case "START_NEW_GAME":
         const newBd2 = action.payload.bd;

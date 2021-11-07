@@ -5,7 +5,7 @@ export type CellType = {
   i: number;
   type: "auto" | "user";
   error: boolean;
-  conflict: number[] // index of cells that are conflicting
+  conflict: boolean // index of cells that are conflicting
 };
 export type BdType = CellType[];
 export type actionType = {
