@@ -38,17 +38,22 @@
   }
 }
 
-.footer{
+.footer {
   margin-top: 3rem;
-  color: rgb(85, 85, 85)
+  color: rgb(85, 85, 85);
 }
 .footer > * {
   margin: 0.3rem auto;
 }
 
-.logo-container{
+.logo-container {
   margin: 1rem auto;
 }
-.logo-container > *{
+.logo-container > * {
   margin: 0.3rem;
+}
+
+.tips {
+  width: 27rem;
+  margin: 1rem auto;
 }

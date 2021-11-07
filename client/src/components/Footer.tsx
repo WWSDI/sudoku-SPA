@@ -7,13 +7,13 @@ export const Footer = () => {
       <p>Launched on 4 Nov 2021</p>
       <p>
         Studying at {""}
-        <a href="https://www.developers.ac.nz/">Developers Institute</a>
+        <a target="_blank" href="https://www.developers.ac.nz/">Developers Institute</a>
       </p>
       <div className="logo-container">
-        <a href="https://www.linkedin.com/in/shawn-su-78a654215/">
+        <a target="_blank" href="https://www.linkedin.com/in/shawn-su-78a654215/">
           <img src="https://content.linkedin.com/content/dam/me/business/en-us/amp/brand-site/v2/bg/LI-Bug.svg.original.svg" />
         </a>
-        <a href="https://github.com/WWSDI">
+        <a target="_blank" href="https://github.com/WWSDI">
           <svg
             height="64"
             aria-hidden="true"
