@@ -5,15 +5,28 @@ import "./GameController.css";
 import { setTokenSourceMapRange } from "typescript";
 import makeBd from "../lib/makeBd";
 
-export default function GameController({ setPuzzle, setSolution, bdDispatch,setWon }: BoardProps) {
+export default function GameController({
+  setPuzzle,
+  setSolution,
+  bdDispatch,
+  setWon,
+}: BoardProps) {
   const [difficulty, setDifficulty] = useState("easy");
 
   const startNewGame = () => {
     console.log(difficulty);
-
+    let data;
     // This is not the best solution as the wait time is arbitrarily set, but I don't know how to make this cb() wait for the if statement to execute and store all fetched data to localstorage first
 
-    if (!localStorage.getItem(`puzzles-${difficulty}`)) {
+    console.log(
+      typeof localStorage.getItem(`puzzles-${difficulty}`),
+      localStorage.getItem(`puzzles-${difficulty}`),
+    );
+
+    if (
+      localStorage.getItem(`puzzles-${difficulty}`) === "null" ||
+      localStorage.getItem(`puzzles-${difficulty}`) === undefined
+    ) {
       (async () => {
         // if no more local storage puzzles, then fetch and store
         const puzzles = await fetchPuzzles();
@@ -24,8 +37,8 @@ export default function GameController({ setPuzzle, setSolution, bdDispatch,setW
       })();
     }
 
-    let data = localStorage.getItem(`puzzles-${difficulty}`);
     setTimeout(() => {
+      data = localStorage.getItem(`puzzles-${difficulty}`);
       let localPuzzles = JSON.parse(data as string);
       console.log("Parsed Puzzles:", localPuzzles);
 
@@ -39,8 +52,11 @@ export default function GameController({ setPuzzle, setSolution, bdDispatch,setW
       localStorage.setItem("bd", JSON.stringify(null));
       setPuzzle(newPuzzle);
       setSolution(newSolution);
-      bdDispatch({ type: "START_NEW_GAME", payload: { bd: makeBd(newPuzzle) } });
-      setWon(false)
+      bdDispatch({
+        type: "START_NEW_GAME",
+        payload: { bd: makeBd(newPuzzle) },
+      });
+      setWon(false);
 
       // save the popped localPuzzles back to localStorage
       if (localPuzzles.length === 0) {

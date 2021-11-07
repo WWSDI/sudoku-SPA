@@ -107,11 +107,18 @@ export default function Game() {
             }
           });
           // 2.2.2 calculate ac's conflict status based on other sudokuCell's conflict arr
+          if (newBd1[i].v === 0) {
+            newBd1[i].conflict = [];
+          }
           if (deconflictFlag) {
             // change the ac's conflict status
-            newBd1[i].conflict = newBd1[i].conflict.filter((idx) => idx !== i);
+            const newConflict = [...newBd1[i].conflict];
+            const index = newConflict.findIndex((idx) => idx !== i);
+            newConflict.splice(index, 1);
+            newBd1[i].conflict = newConflict;
           }
         }
+        console.log(newBd1.filter((cell) => cell.conflict.length > 0));
         return newBd1;
       case "START_NEW_GAME":
         const newBd2 = action.payload.bd;
