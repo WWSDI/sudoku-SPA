@@ -1,7 +1,7 @@
 import { Puzzles, Difficulty } from "./types";
 
 export const fetchPuzzles = async () => {
-  const response = await fetch("http://localhost:5005/puzzles");
+  const response = await fetch(`${process.env.API_URL}/puzzles`);
   if (response.ok) {
     const puzzles: Puzzles = await response.json();
     console.log("🌈 new puzzles fetched", puzzles);
