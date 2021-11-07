@@ -1,9 +1,9 @@
 const app = require('./app')
 const {connect} = require('mongoose')
 
-const mongoDbUrl = process.env.MONGO_URI || 'mongodb://localhost:27017/test'
+const mongoDbUrl = process.env.MONGO_URI || 'mongodb://localhost:27017/sudoku'
 
-connect("mongodb://localhost:27017/sudoku");
+connect(mongoDbUrl);
 
 const port = process.env.PORT || 5005
 

@@ -18,7 +18,7 @@ app.get("/", (req: Request, res: Response) => {
 // GET 10 puzzles for each difficulty, send to the client and to be saved in local storage
 app.get("/puzzles", async (req: Request, res: Response) => {
   const solutions = await getRanSolutionsMongo(10);
-  console.log(solutions);
+  // console.log(solutions);
 
   // 2. create puzzles based on the solutions
   const result = createPuzzleSolutionSets(solutions);
