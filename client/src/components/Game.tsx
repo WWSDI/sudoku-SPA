@@ -6,6 +6,7 @@ import Board from "./Board";
 import BoardController from "./BoardController";
 import GameController from "./GameController";
 import Numpad from "./Numpad";
+import { getSudokuIndices } from "../util/util";
 
 let initPuzzle = [
   3, 0, 9, 5, 1, 7, 0, 6, 0, 1, 2, 6, 8, 3, 0, 7, 5, 9, 0, 7, 5, 9, 0, 2, 3, 1,
@@ -32,13 +33,14 @@ export default function Game() {
   const bdReducer = (bd: BdType, action: actionType) => {
     switch (action.type) {
       case "SET_CELL_VALUE":
-        const newBd1 = [...bd];
+        let newBd1 = [...bd];
         const i = ac.i;
         const v = action.payload.v;
         //console.log(i, v);
 
         if (v !== undefined) {
           newBd1[i] = { ...bd[i] };
+          // 1. Change cell value
           if (bd[i].type === "user") {
             // if cell is empty, fill new value;
             if (bd[i].v !== v) {
@@ -55,6 +57,59 @@ export default function Game() {
               newBd1[i].v = 0;
               newBd1[i].error = false;
             }
+          }
+          // 2. Change conflict arr based on cell value change
+          const sudokuIndicesNoAc = getSudokuIndices(i).filter(
+            (idx) => idx !== i,
+          );
+          // 2.1 change conflict arr for sudoku cells (bar the ac)
+          let conflictFlag = false;
+          newBd1 = newBd1.map((cell, idx, val) => {
+            if (sudokuIndicesNoAc.includes(idx)) {
+              // 2.1.1 add i to conflict arr
+              if (bd[idx].v !== 0 && cell.v === newBd1[i].v) {
+                conflictFlag = true;
+                const newConflict = [...cell.conflict];
+                newConflict.push(i);
+                return { ...cell, conflict: newConflict };
+              } else {
+                return cell;
+              }
+            } else {
+              return cell;
+            }
+          });
+
+          // 2.1.2 calculate ac's conflict status based on other sudokuCell's conflict arr
+          if (conflictFlag) {
+            // change the ac's conflict status
+            const newConflict = [...newBd1[i].conflict];
+            newConflict.push(i);
+            newBd1[i].conflict = newConflict;
+          }
+
+          // 2.2 remove i from conflict arr
+          let deconflictFlag = false;
+          newBd1 = newBd1.map((cell, idx, val) => {
+            // 2.2.1
+            if (sudokuIndicesNoAc.includes(idx)) {
+              if (cell.conflict.includes(i) && cell.v !== newBd1[i].v) {
+                deconflictFlag = true;
+                return {
+                  ...cell,
+                  conflict: cell.conflict.filter((idx) => idx !== i),
+                };
+              } else {
+                return cell;
+              }
+            } else {
+              return cell;
+            }
+          });
+          // 2.2.2 calculate ac's conflict status based on other sudokuCell's conflict arr
+          if (deconflictFlag) {
+            // change the ac's conflict status
+            newBd1[i].conflict = newBd1[i].conflict.filter((idx) => idx !== i);
           }
         }
         return newBd1;

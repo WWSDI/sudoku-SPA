@@ -30,6 +30,27 @@ export const getSudoku = (idx: number) => {
   });
   return sudoku;
 };
+export const getSudokuIndices = (idx: number) => {
+  // ❗️ This part can be optimised by using a lookup obj instead of calculating every time
+  const [i, j] = idxToij(idx);
+  const blcIStart = Math.floor(i / 3) * 3;
+  const blcJStart = Math.floor(j / 3) * 3;
+
+  const sudoku = Array.from({ length: 81 }, (_, i) => i).filter((idx) => {
+    // console.log("CELL:", cell);
+    const [m, n] = idxToij(idx);
+
+    return (
+      m === i ||
+      n === j ||
+      (m >= blcIStart &&
+        m < blcIStart + 3 &&
+        n >= blcJStart &&
+        n < blcJStart + 3)
+    );
+  });
+  return sudoku;
+};
 
 // Formatting
 export const indexToSelector = (index: number) =>
