@@ -68,7 +68,7 @@ export default function GameController({
         );
       }
       console.log(localStorage.getItem(`puzzles-${difficulty}`));
-    }, 100);
+    }, 500);
   };
 
   return (
