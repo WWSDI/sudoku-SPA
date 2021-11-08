@@ -1,18 +1,19 @@
 .Numpad {
   display: grid;
-  grid-gap: 0.5rem;
+  grid-gap: calc(var(--base-cell-width) / 3);
   grid-template-columns: repeat(3, 1fr);
   color: cornflowerblue;
   font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
-  font-size: 3rem;
-  margin:0 auto;
-  margin-top: 2rem;
-  width: 27rem;
+  font-size: calc(var(--base-cell-width));
+  /* padding: calc(var(--base-cell-width) / 2); */
+  margin: 0 auto;
+  margin-top: calc(var(--base-cell-width) / 2);
+  width: calc(var(--base-board-width) / 1.1);
 }
 
 .congrats {
-  font-size: 3rem;
-  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  font-size: calc(var(--base-cell-width));
+  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
   animation-duration: 1.5s;
   animation-name: jump;
 }
@@ -43,5 +44,28 @@
   }
   100% {
     transform: translate(0%, -50%) scale(1.25, 0.75);
+  }
+}
+
+@media screen and (min-width: 38rem) {
+  :root {
+    --base-cell-width: 4rem;
+  }
+  h1 {
+    font-size: calc(var(--base-cell-width) / 2);
+    margin: 0.5rem auto;
+  }
+  .Numpad {
+    display: grid;
+    grid-gap: calc(var(--base-cell-width) / 10);
+    grid-template-columns: repeat(9, 1fr);
+    /* color: gold; */
+    font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
+      sans-serif;
+    font-size: calc(var(--base-cell-width));
+    /* padding: calc(var(--base-cell-width) / 2); */
+    margin: 0 auto;
+    margin-top: calc(var(--base-cell-width) / 4);
+    width: calc(var(--base-board-width));
   }
 }

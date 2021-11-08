@@ -26,13 +26,13 @@
 /* base color */
 .Cell {
   box-sizing: border-box;
-  width: 3rem;
-  height: 3rem;
+  width: var(--base-cell-width);
+  height: var(--base-cell-width);
   border-right: 1px solid rgb(206, 206, 222);
   border-bottom: 1px solid rgb(206, 206, 222);
   /* border-top: 1px solid lavender;
   border-right: 1px solid lavender; */
-  font-size: 2rem;
+  font-size: calc(var(--base-cell-width) / 1.4);
   font-weight: 300;
   display: flex;
   justify-content: center;
@@ -62,7 +62,7 @@
   border-right: 3px solid black;
 }
 
-.sudoku-complete{
-  background-color: rgb(164, 187, 187);
+.sudoku-complete {
+  background-color: rgb(154, 181, 181);
   transition: background-color 0.2s ease;
 }

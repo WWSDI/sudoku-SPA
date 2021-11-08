@@ -1,30 +1,30 @@
 .GameController {
   display: flex;
-  font-size: 1.3rem;
+  font-size: calc(var(--base-cell-width) / 2);
   justify-content: space-around;
   align-items: center;
-  width: 27rem;
+  width: var(--base-board-width);
   margin: 0 auto;
-  margin-bottom: 2rem;
+  margin-bottom: calc(var(--base-cell-width) / 2);
 }
 
-label{
+label {
   display: grid;
   grid-template-columns: 1fr;
-
 }
 
 select {
   /* border: 1px blue solid; */
-  font-size: 1.1rem; 
+  font-size: calc(var(--base-cell-width) / 2.2);
 }
 
 #new-game {
   border-radius: 0.5rem;
-  background-color: gold; 
+  background-color: gold;
   padding: 1rem;
 }
-#new-game:hover, #new-game:focus {
+#new-game:hover,
+#new-game:focus {
   background-color: rgb(235, 193, 86);
   cursor: pointer;
 }
@@ -32,4 +32,5 @@ select {
   background-color: goldenrod;
 }
 
-.time{}
+.time {
+}

@@ -1,17 +1,11 @@
+:root {
+  --base-cell-width: 10vw;
+  --base-board-width: calc(9 * var(--base-cell-width));
+}
+
 .App {
   text-align: center;
   margin: 2rem auto;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
 }
 
 .App-header {
@@ -27,6 +21,10 @@
 
 .App-link {
   color: #61dafb;
+}
+
+h1 {
+  font-size: calc(var(--base-cell-width) / 1.2);
 }
 
 @keyframes App-logo-spin {
@@ -54,6 +52,37 @@
 }
 
 .tips {
-  width: 27rem;
+  width: var(--base-board-width);
   margin: 1rem auto;
 }
+
+@media screen and (min-width: 40rem) {
+  :root {
+    --base-cell-width: 4rem;
+  }
+  .GameController {
+    font-size: calc(var(--base-cell-width) / 4);
+  }
+}
+
+/* @media screen and (min-width: 25rem) {
+  :root {
+    --base-cell-width: 2.7rem;
+  }
+}
+@media screen and (min-width: 35rem) {
+  :root {
+    --base-cell-width: 3rem;
+  }
+  .Numpad {
+    grid-gap: calc(var(--base-cell-width) / 5);
+  }
+}
+@media screen and (min-width: 40rem) {
+  :root {
+    --base-cell-width: 3.5rem;
+  }
+  .Numpad {
+    grid-gap: calc(var(--base-cell-width) / 5);
+  }
+} */

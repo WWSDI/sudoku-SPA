@@ -149,7 +149,7 @@ export default function Board({
           setTimeout(() => cell.classList.add("sudoku-complete"), i * 30);
           setTimeout(
             () => cell.classList.remove("sudoku-complete"),
-            (i + 8) * 30,
+            (i + 12) * 30,
           );
         });
     }
