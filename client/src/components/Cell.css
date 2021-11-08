@@ -62,7 +62,14 @@
   border-right: 3px solid black;
 }
 
+<<<<<<< HEAD
 .sudoku-complete {
   background-color: rgb(154, 181, 181);
   transition: background-color 0.2s ease;
 }
+=======
+.sudoku-complete{
+  background-color: rgb(164, 187, 187);
+  transition: background-color 0.2s ease;
+}
+>>>>>>> ac82888664a606aeb863620b48bc464c481f8c4c
