@@ -85,17 +85,17 @@ export default function Board({
     // TODO:
     // 1. change row, col and blc to wave propogation pattern
 
-    const row = (_: Element | number, idx: number) => {
+    const row = (_: Element | number | boolean, idx: number) => {
       const [i, j] = idxToij(idx);
       const [m, n] = idxToij(ac.i);
       return m === i;
     };
-    const col = (_: Element | number, idx: number) => {
+    const col = (_: Element | number | boolean, idx: number) => {
       const [i, j] = idxToij(idx);
       const [m, n] = idxToij(ac.i);
       return n === j;
     };
-    const blc = (_: Element | number, idx: number) => {
+    const blc = (_: Element | number | boolean, idx: number) => {
       const [i, j] = idxToij(idx);
       const [m, n] = idxToij(ac.i);
       const blcIStart = Math.floor(i / 3) * 3;
@@ -107,14 +107,15 @@ export default function Board({
         n < blcJStart + 3
       );
     };
-    const nothing = (_: Element | number, idx: number) => {
+    const nothing = (_: Element | number | boolean, idx: number) => {
       return false;
     };
-    const board = (_: Element | number, idx: number) => {
+    const board = (_: Element | number | boolean, idx: number) => {
       return true;
     };
 
     if (
+      // all cells are filled in such range
       bd
         .map((cell: CellType) => cell.v)
         .filter(
@@ -129,8 +130,20 @@ export default function Board({
             : nothing,
         )
         .every((cellVal) => cellVal !== 0) &&
+      // no conflict in such range
       bd
         .map((cell: CellType) => cell.conflict)
+        .filter(
+          range === "row"
+            ? row
+            : range === "col"
+            ? col
+            : range === "blc"
+            ? blc
+            : range === "board"
+            ? board
+            : nothing,
+        )
         .every((conflict) => conflict === false)
     ) {
       Array.from(document.querySelectorAll(".Cell"))
