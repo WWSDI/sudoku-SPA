@@ -28,6 +28,31 @@ export const getSudoku = (idx: number) => {
   });
   return sudoku;
 };
+export const getSameRowIndices = (idx: number) => {
+  const [i, j] = idxToij(idx);
+  const sameRowIndices = Array.from({ length: 81 }, (_, i) => i).filter(
+    (idx) => {
+      // console.log("CELL:", cell);
+      const [m, n] = idxToij(idx);
+
+      return m === i;
+    },
+  );
+  return sameRowIndices;
+};
+export const getSameColIndices = (idx: number) => {
+  const [i, j] = idxToij(idx);
+  const sameColIndices = Array.from({ length: 81 }, (_, i) => i).filter(
+    (idx) => {
+      // console.log("CELL:", cell);
+      const [m, n] = idxToij(idx);
+
+      return n === j;
+    },
+  );
+  return sameColIndices;
+};
+
 export const getSudokuIndices = (idx: number) => {
   // ❗️ This part can be optimised by using a lookup obj instead of calculating every time
   const [i, j] = idxToij(idx);
@@ -67,3 +92,9 @@ export const get2DSolutionFromBd = (bd: BdType) => {
   }
   return solution2D;
 };
+
+// export const getNodeListFromIdx = (idx: number) => {
+//   const allCellNodeList = document.querySelectorAll(".Cell");
+//   const sameRow =
+//   return nodeList;
+// };

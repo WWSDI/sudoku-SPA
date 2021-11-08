@@ -6,6 +6,7 @@ import {
   get2DSolutionFromBd,
   getSudoku,
   idToIndex,
+  idxToij,
   indexToSelector,
 } from "../util/util";
 import validateSolution from "../util/sudokuValidator";
@@ -24,8 +25,6 @@ export default function Board({
   puzzle,
 }: BoardProps): JSX.Element {
   const [sudoku, setSudoku] = useState<Element[]>([]);
-
-  
 
   // Remove highlight of sudoku, ac and same num
   const remove3Hl = () => {
@@ -55,7 +54,7 @@ export default function Board({
   const hlSudoku = (idx: number) => {
     sudoku.forEach((cell) => cell.classList.add("hl-sudoku"));
   };
- 
+
   const hlConflict = () => {
     const allCells = document.querySelectorAll(".Cell");
     allCells.forEach((cell) => {
@@ -82,6 +81,80 @@ export default function Board({
     return result;
   };
 
+  const flashCompletedRange = (range: "row" | "col" | "blc" | "board") => {
+    // TODO:
+    // 1. change row, col and blc to wave propogation pattern
+
+    const row = (_: Element | number, idx: number) => {
+      const [i, j] = idxToij(idx);
+      const [m, n] = idxToij(ac.i);
+      return m === i;
+    };
+    const col = (_: Element | number, idx: number) => {
+      const [i, j] = idxToij(idx);
+      const [m, n] = idxToij(ac.i);
+      return n === j;
+    };
+    const blc = (_: Element | number, idx: number) => {
+      const [i, j] = idxToij(idx);
+      const [m, n] = idxToij(ac.i);
+      const blcIStart = Math.floor(i / 3) * 3;
+      const blcJStart = Math.floor(j / 3) * 3;
+      return (
+        m >= blcIStart &&
+        m < blcIStart + 3 &&
+        n >= blcJStart &&
+        n < blcJStart + 3
+      );
+    };
+    const nothing = (_: Element | number, idx: number) => {
+      return false;
+    };
+    const board = (_: Element | number, idx: number) => {
+      return true;
+    };
+
+    if (
+      bd
+        .map((cell: CellType) => cell.v)
+        .filter(
+          range === "row"
+            ? row
+            : range === "col"
+            ? col
+            : range === "blc"
+            ? blc
+            : range === "board"
+            ? board
+            : nothing,
+        )
+        .every((cellVal) => cellVal !== 0) &&
+      bd
+        .map((cell: CellType) => cell.conflict)
+        .every((conflict) => conflict === false)
+    ) {
+      Array.from(document.querySelectorAll(".Cell"))
+        .filter(
+          range === "row"
+            ? row
+            : range === "col"
+            ? col
+            : range === "blc"
+            ? blc
+            : range === "board"
+            ? board
+            : nothing,
+        )
+        .forEach((cell, i) => {
+          setTimeout(() => cell.classList.add("sudoku-complete"), i * 30);
+          setTimeout(
+            () => cell.classList.remove("sudoku-complete"),
+            (i + 8) * 30,
+          );
+        });
+    }
+  };
+
   // 1. update sudoku
   useEffect(() => {
     setSudoku(getSudoku(ac.i));
@@ -99,6 +172,9 @@ export default function Board({
 
   useEffect(() => {
     hlConflict();
+    flashCompletedRange("col");
+    flashCompletedRange("row");
+    flashCompletedRange("blc");
   }, [bd]);
 
   // 3. highlight conflict when bd chagnes

@@ -37,6 +37,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  transition: background-color 0.2s ease-in-out;
 }
 .auto {
   color: rgb(92, 92, 92);
@@ -59,4 +60,9 @@
 }
 .Cell:nth-child(3n) {
   border-right: 3px solid black;
+}
+
+.sudoku-complete{
+  background-color: rgb(164, 187, 187);
+  transition: background-color 0.2s ease;
 }
