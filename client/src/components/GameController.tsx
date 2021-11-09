@@ -3,6 +3,7 @@ import { BoardProps, Puzzle } from "../lib/types";
 import { fetchPuzzles, storeFetchedPuzzles } from "../lib/localStorage";
 import "./GameController.css";
 import makeBd from "../lib/makeBd";
+import { isEmpty } from "../util/util";
 
 export default function GameController({
   setPuzzle,
@@ -13,20 +14,10 @@ export default function GameController({
   const [difficulty, setDifficulty] = useState("easy");
 
   const startNewGame = () => {
-    console.log(difficulty);
     let data;
     // This is not the best solution as the wait time is arbitrarily set, but I don't know how to make this cb() wait for the if statement to execute and store all fetched data to localstorage first
 
-    console.log(
-      typeof localStorage.getItem(`puzzles-${difficulty}`),
-      localStorage.getItem(`puzzles-${difficulty}`),
-    );
-
-    if (
-      localStorage.getItem(`puzzles-${difficulty}`) === null ||
-      localStorage.getItem(`puzzles-${difficulty}`) === "null" ||
-      localStorage.getItem(`puzzles-${difficulty}`) === undefined
-    ) {
+    if (isEmpty(localStorage.getItem(`puzzles-${difficulty}`))) {
       (async () => {
         // if no more local storage puzzles, then fetch and store
         const puzzles = await fetchPuzzles();

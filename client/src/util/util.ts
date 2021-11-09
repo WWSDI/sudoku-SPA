@@ -98,3 +98,9 @@ export const get2DSolutionFromBd = (bd: BdType) => {
 //   const sameRow =
 //   return nodeList;
 // };
+export const isEmpty = (data: any) => {
+  if (data === undefined || data === null || data === "null") {
+    return true;
+  }
+  return false;
+};
