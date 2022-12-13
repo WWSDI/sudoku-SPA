@@ -38,7 +38,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var express = require("express");
 var app = express();
-var _a = require("./lib/createPuzzles"), getRanSolutionsMongo = _a.getRanSolutionsMongo, createPuzzleSolutionSets = _a.createPuzzleSolutionSets;
+var _a = require("./lib/createPuzzles"), getRanSolution = _a.getRanSolution, getPuzzleSet = _a.getPuzzleSet;
 var cors = require("cors");
 app.use(cors());
 app.use(express.json());
@@ -46,19 +46,17 @@ app.use(express.json());
 app.get("/", function (req, res) {
     res.send("Hello World!");
 });
-// GET 10 puzzles for each difficulty, send to the client and to be saved in local storage
-app.get("/puzzles", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var solutions, result;
+// GET 1 puzzle set, send to the client and to be saved in local storage
+app.get("/puzzles/:difficulty", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var solution, puzzleSet;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, getRanSolutionsMongo(1)];
+            case 0: return [4 /*yield*/, getRanSolution()];
             case 1:
-                solutions = _a.sent();
-                if (solutions)
-                    console.log("sending fetched solutions to client", solutions);
-                result = createPuzzleSolutionSets(solutions);
-                // 3. send the puzzles & solutions to the client
-                res.send({ puzzles: result });
+                solution = _a.sent();
+                puzzleSet = getPuzzleSet(solution, req.params.difficulty);
+                // 3. send puzzle set to the client
+                res.send(puzzleSet);
                 return [2 /*return*/];
         }
     });

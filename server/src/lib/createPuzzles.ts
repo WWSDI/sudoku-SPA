@@ -1,47 +1,16 @@
-//const AllSolutions100: number[][] = require("../../../data/100solutions_1D.json");
-
 import { SolutionModel } from "../models/SolutionModel";
-
-// ❗️This needs to work with mongodb eventually
-// const getSolutions = (
-//   numSolutions: number,
-//   AllSolutions: number[][],
-// ): number[][] => {
-//   const length = AllSolutions.length;
-//   const solutions: number[][] = [];
-//   for (let i = 0; i < numSolutions; i++) {
-//     const oneSolution: number[] =
-//       AllSolutions100[Math.floor(Math.random() * length)];
-//     solutions.push(oneSolution);
-//   }
-//   return solutions;
-// };
-
-// console.log("😀", AllSolutions100.length, AllSolutions100[1]);
-
-// ⭐️ Official difficulty
-// const lookupDifficulty = {
-//   easy: {
-//     numZero: 35,
-//   },
-//   medium: {
-//     numZero: 45,
-//   },
-//   hard: {
-//     numZero: 55,
-//   },
-// };
+import { nonrepeatRanNums } from "../utils/math";
 
 // Testing difficulty
 const lookupDifficulty = {
-  test: {
-    numZero: 10,
+  testing: {
+    numZero: 3,
   },
   easy: {
-    numZero: 35,
+    numZero: 25,
   },
   medium: {
-    numZero: 45,
+    numZero: 40,
   },
   hard: {
     numZero: 55,
@@ -51,33 +20,21 @@ const lookupDifficulty = {
   },
 };
 
-const getRanSolutionsMongo = async (numSolutions: number) => {
-  let solutions: number[][] = [];
-  // Get the count of all users
+const getRanSolution = async () => {
+  // 1. Get the count of all users
   const count = await SolutionModel.count();
-  // Get multiple sudoku solutions
-  for (let i = 0; i < numSolutions; i++) {
-    var ranNum = Math.floor(Math.random() * count);
-    const { solution } = await SolutionModel.findOne().skip(ranNum);
-    solutions.push(solution);
-  }
-
-  return solutions;
+  // 2. Get multiple sudoku solutions
+  var ranNum = Math.floor(Math.random() * count);
+  const { solution } = await SolutionModel.findOne().skip(ranNum);
+  // 3.
+  return solution;
 };
 
-const nonrepeatRanNums = (ceil: number, numZero: number): number[] => {
-  const zeroIndice: Set<number> = new Set();
-  while (zeroIndice.size < numZero) {
-    const index = Math.floor(Math.random() * ceil);
-    zeroIndice.add(index);
-  }
+type Difficulty = "testing" | "easy" | "medium" | "hard" | "hell";
 
-  return Array.from(zeroIndice).sort((a, b) => a - b);
-};
-type Difficulty = "test" | "easy" | "medium" | "hard" | "hell";
 const createPuzzle = (
   sudokuSolution: number[],
-  difficulty: Difficulty,
+  difficulty: Difficulty
 ): number[] => {
   const { numZero } = lookupDifficulty[difficulty];
 
@@ -92,56 +49,23 @@ const createPuzzle = (
   return puzzle;
 };
 
-interface PuzzleSolution {
+interface PuzzleSet {
   puzzle: number[];
   solution: number[];
-}
-interface AllDifficultyPuzzleSolution {
-  test: PuzzleSolution[];
-  easy: PuzzleSolution[];
-  medium: PuzzleSolution[];
-  hard: PuzzleSolution[];
-  hell: PuzzleSolution[];
+  difficulty: Difficulty;
 }
 
-const createPuzzleSolutionSets = (
-  sudokuSolutions: number[][],
-): AllDifficultyPuzzleSolution => {
-  // const solutions = getRanSolutionsMongo(100);
+const getPuzzleSet = (
+  solution: number[],
+  difficulty: Difficulty
+): PuzzleSet => {
+  const puzzle = createPuzzle(solution, difficulty);
+  const puzzleSet = { puzzle, solution, difficulty };
 
-  const numPuzzles = sudokuSolutions.length;
-  const result: AllDifficultyPuzzleSolution = {
-    test: [],
-    easy: [],
-    medium: [],
-    hard: [],
-    hell: [],
-  };
-
-  const allDifficulty: ["test", "easy", "medium", "hard", "hell"] = [
-    "test",
-    "easy",
-    "medium",
-    "hard",
-    "hell",
-  ];
-
-  allDifficulty.forEach((difficulty: Difficulty) => {
-    for (let i = 0; i < numPuzzles; i++) {
-      const puzzle = createPuzzle(sudokuSolutions[i], difficulty);
-      const solution = sudokuSolutions[i];
-      const puzzleSolution: PuzzleSolution = {
-        puzzle,
-        solution,
-      };
-      result[difficulty].push(puzzleSolution);
-    }
-  });
-
-  return result;
+  return puzzleSet;
 };
 
-module.exports = { createPuzzleSolutionSets, getRanSolutionsMongo };
+module.exports = { getPuzzleSet, getRanSolution };
 
 // 🧪🧪🧪 TESTING
 // console.log(arr1.length, arr1);

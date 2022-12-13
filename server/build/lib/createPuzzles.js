@@ -1,5 +1,4 @@
 "use strict";
-//const AllSolutions100: number[][] = require("../../../data/100solutions_1D.json");
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -38,43 +37,17 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var SolutionModel_1 = require("../models/SolutionModel");
-// ❗️This needs to work with mongodb eventually
-// const getSolutions = (
-//   numSolutions: number,
-//   AllSolutions: number[][],
-// ): number[][] => {
-//   const length = AllSolutions.length;
-//   const solutions: number[][] = [];
-//   for (let i = 0; i < numSolutions; i++) {
-//     const oneSolution: number[] =
-//       AllSolutions100[Math.floor(Math.random() * length)];
-//     solutions.push(oneSolution);
-//   }
-//   return solutions;
-// };
-// console.log("😀", AllSolutions100.length, AllSolutions100[1]);
-// ⭐️ Official difficulty
-// const lookupDifficulty = {
-//   easy: {
-//     numZero: 35,
-//   },
-//   medium: {
-//     numZero: 45,
-//   },
-//   hard: {
-//     numZero: 55,
-//   },
-// };
+var math_1 = require("../utils/math");
 // Testing difficulty
 var lookupDifficulty = {
-    test: {
-        numZero: 10,
+    testing: {
+        numZero: 3,
     },
     easy: {
-        numZero: 35,
+        numZero: 25,
     },
     medium: {
-        numZero: 45,
+        numZero: 40,
     },
     hard: {
         numZero: 55,
@@ -83,43 +56,25 @@ var lookupDifficulty = {
         numZero: 60,
     },
 };
-var getRanSolutionsMongo = function (numSolutions) { return __awaiter(void 0, void 0, void 0, function () {
-    var solutions, count, i, ranNum, solution;
+var getRanSolution = function () { return __awaiter(void 0, void 0, void 0, function () {
+    var count, ranNum, solution;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0:
-                solutions = [];
-                return [4 /*yield*/, SolutionModel_1.SolutionModel.count()];
+            case 0: return [4 /*yield*/, SolutionModel_1.SolutionModel.count()];
             case 1:
                 count = _a.sent();
-                i = 0;
-                _a.label = 2;
-            case 2:
-                if (!(i < numSolutions)) return [3 /*break*/, 5];
                 ranNum = Math.floor(Math.random() * count);
                 return [4 /*yield*/, SolutionModel_1.SolutionModel.findOne().skip(ranNum)];
-            case 3:
+            case 2:
                 solution = (_a.sent()).solution;
-                solutions.push(solution);
-                _a.label = 4;
-            case 4:
-                i++;
-                return [3 /*break*/, 2];
-            case 5: return [2 /*return*/, solutions];
+                // 3.
+                return [2 /*return*/, solution];
         }
     });
 }); };
-var nonrepeatRanNums = function (ceil, numZero) {
-    var zeroIndice = new Set();
-    while (zeroIndice.size < numZero) {
-        var index = Math.floor(Math.random() * ceil);
-        zeroIndice.add(index);
-    }
-    return Array.from(zeroIndice).sort(function (a, b) { return a - b; });
-};
 var createPuzzle = function (sudokuSolution, difficulty) {
     var numZero = lookupDifficulty[difficulty].numZero;
-    var zeroIndice = nonrepeatRanNums(sudokuSolution.length, numZero);
+    var zeroIndice = (0, math_1.nonrepeatRanNums)(sudokuSolution.length, numZero);
     var puzzle = sudokuSolution.map(function (num, i) {
         if (zeroIndice.includes(i)) {
             return 0;
@@ -129,37 +84,12 @@ var createPuzzle = function (sudokuSolution, difficulty) {
     });
     return puzzle;
 };
-var createPuzzleSolutionSets = function (sudokuSolutions) {
-    // const solutions = getRanSolutionsMongo(100);
-    var numPuzzles = sudokuSolutions.length;
-    var result = {
-        test: [],
-        easy: [],
-        medium: [],
-        hard: [],
-        hell: [],
-    };
-    var allDifficulty = [
-        "test",
-        "easy",
-        "medium",
-        "hard",
-        "hell",
-    ];
-    allDifficulty.forEach(function (difficulty) {
-        for (var i = 0; i < numPuzzles; i++) {
-            var puzzle = createPuzzle(sudokuSolutions[i], difficulty);
-            var solution = sudokuSolutions[i];
-            var puzzleSolution = {
-                puzzle: puzzle,
-                solution: solution,
-            };
-            result[difficulty].push(puzzleSolution);
-        }
-    });
-    return result;
+var getPuzzleSet = function (solution, difficulty) {
+    var puzzle = createPuzzle(solution, difficulty);
+    var puzzleSet = { puzzle: puzzle, solution: solution, difficulty: difficulty };
+    return puzzleSet;
 };
-module.exports = { createPuzzleSolutionSets: createPuzzleSolutionSets, getRanSolutionsMongo: getRanSolutionsMongo };
+module.exports = { getPuzzleSet: getPuzzleSet, getRanSolution: getRanSolution };
 // 🧪🧪🧪 TESTING
 // console.log(arr1.length, arr1);
 // const sampleSolution1 = [

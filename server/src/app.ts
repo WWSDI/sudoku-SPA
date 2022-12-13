@@ -1,10 +1,7 @@
 import { Request, Response } from "express";
 const express = require("express");
 const app = express();
-const {
-  getRanSolutionsMongo,
-  createPuzzleSolutionSets,
-} = require("./lib/createPuzzles");
+const { getRanSolution, getPuzzleSet } = require("./lib/createPuzzles");
 const cors = require("cors");
 
 app.use(cors());
@@ -15,16 +12,16 @@ app.get("/", (req: Request, res: Response) => {
   res.send("Hello World!");
 });
 
-// GET 10 puzzles for each difficulty, send to the client and to be saved in local storage
-app.get("/puzzles", async (req: Request, res: Response) => {
-  const solutions = await getRanSolutionsMongo(1);
-  if (solutions) console.log("sending fetched solutions to client", solutions);
+// GET 1 puzzle set, send to the client and to be saved in local storage
+app.get("/puzzles/:difficulty", async (req: Request, res: Response) => {
+  // 1. get one random solution
+  const solution = await getRanSolution();
 
-  // 2. create puzzles based on the solutions
-  const result = createPuzzleSolutionSets(solutions);
+  // 2. create puzzles based on the solution and chosen difficulty
+  const puzzleSet = getPuzzleSet(solution, req.params.difficulty);
 
-  // 3. send the puzzles & solutions to the client
-  res.send({ puzzles: result });
+  // 3. send puzzle set to the client
+  res.send(puzzleSet);
 });
 
 module.exports = app;
