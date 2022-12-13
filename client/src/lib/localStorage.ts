@@ -1,16 +1,17 @@
 import { Puzzles, Difficulty } from "./types";
 
+
 export const fetchPuzzles = async () => {
-  console.log(`fetching puzzles from ${process.env.REACT_APP_API_URI}/puzzles`);
+  // console.log(`fetching puzzles from ${process.env.REACT_APP_API_URI}/puzzles`);
   try {
-    const response = await fetch(`https://sudoku-spa.herokuapp.com/puzzles`);
-    console.log(response.status);
+    const response = await fetch(`${process.env.REACT_APP_API_URI}/puzzles`);
+    // console.log(response.status);
     if (response.ok) {
       const puzzles: Puzzles = await response.json();
       console.log("🌈 new puzzles fetched", puzzles);
       return puzzles;
     } else {
-      alert("Error: fetching puzzles not successful");
+      alert("⚠️ Error: fetching puzzles not successful");
     }
   } catch (e) {
     console.log(e);
