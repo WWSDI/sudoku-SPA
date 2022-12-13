@@ -85,7 +85,7 @@ export default function GameController({
         New Game
       </div>
       {/* This one needs to use conflict <div>Show Mistakes</div> */}
-      <div className="time">Time: </div>
+      {/* <div className="time">Time: </div> */}
     </div>
   );
 }

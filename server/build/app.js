@@ -51,7 +51,7 @@ app.get("/puzzles", function (req, res) { return __awaiter(void 0, void 0, void 
     var solutions, result;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, getRanSolutionsMongo(3)];
+            case 0: return [4 /*yield*/, getRanSolutionsMongo(1)];
             case 1:
                 solutions = _a.sent();
                 if (solutions)
