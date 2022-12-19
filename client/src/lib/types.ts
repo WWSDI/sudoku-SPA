@@ -38,17 +38,9 @@ export interface BoardProps {
 }
 export interface NumpadProps extends BoardProps {}
 
-export type Puzzle = {
+export type PuzzleSet = {
   puzzle: number[];
   solution: number[];
-};
-export type Puzzles = {
-  puzzles: {
-    test: Puzzle[];
-    easy: Puzzle[];
-    medium: Puzzle[];
-    hard: Puzzle[];
-    hell: Puzzle[];
-  };
+  difficulty: Difficulty;
 };
 export type Difficulty = "test" | "easy" | "medium" | "hard" | "hell";

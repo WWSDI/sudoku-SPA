@@ -1,28 +1,27 @@
-import { Puzzles, Difficulty } from "./types";
+import { Difficulty, PuzzleSet } from "./types";
 
-
-export const fetchPuzzles = async () => {
+export const fetchPuzzleSet = async (difficulty: string) => {
   // console.log(`fetching puzzles from ${process.env.REACT_APP_API_URI}/puzzles`);
   try {
-    const response = await fetch(`${process.env.REACT_APP_API_URI}/puzzles`);
+    const response = await fetch(
+      `${process.env.REACT_APP_API_URI}/puzzles/${difficulty}`
+    );
     // console.log(response.status);
     if (response.ok) {
-      const puzzles: Puzzles = await response.json();
-      console.log("🌈 new puzzles fetched", puzzles);
-      return puzzles;
+      const puzzleSet: PuzzleSet = await response.json();
+      console.log("🌈 new puzzle set fetched successfully", puzzleSet);
+      return puzzleSet;
     } else {
-      alert("⚠️ Error: fetching puzzles not successful");
+      alert("⚠️ Error: fetching puzzle set not successful");
     }
   } catch (e) {
     console.log(e);
   }
 };
 
-export const storeFetchedPuzzles = (puzzles: Puzzles) => {
-  ["test", "easy", "medium", "hard", "hell"].forEach((difficulty) => {
-    localStorage.setItem(
-      `puzzles-${difficulty}`,
-      JSON.stringify(puzzles.puzzles[difficulty as Difficulty]),
-    );
-  });
+export const storeFetchedPuzzles = (puzzleSet: PuzzleSet) => {
+  localStorage.setItem(
+    `puzzles-${puzzleSet.difficulty}`,
+    JSON.stringify(puzzleSet.difficulty)
+  );
 };
