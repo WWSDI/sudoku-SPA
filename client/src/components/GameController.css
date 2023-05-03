@@ -1,11 +1,11 @@
 .GameController {
   display: flex;
-  font-size: calc(var(--base-cell-width) / 2);
-  justify-content: space-around;
+  font-size: calc(var(--base-cell-width) / 3);
+  justify-content: space-evenly;
   align-items: center;
   width: var(--base-board-width);
   margin: 0 auto;
-  margin-bottom: calc(var(--base-cell-width) / 2);
+  margin-bottom: calc(var(--base-cell-width) / 3);
 }
 
 label {
@@ -15,7 +15,7 @@ label {
 
 select {
   /* border: 1px blue solid; */
-  font-size: calc(var(--base-cell-width) / 2.2);
+  font-size: calc(var(--base-cell-width) / 3.2);
 }
 
 #new-game {
@@ -34,3 +34,5 @@ select {
 
 .time {
 }
+
+

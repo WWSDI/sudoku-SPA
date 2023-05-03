@@ -1,11 +1,11 @@
 :root {
-  --base-cell-width: 9vw;
+  --base-cell-width: 10vw;
   --base-board-width: calc(9 * var(--base-cell-width));
 }
 
 .App {
   text-align: center;
-  margin: 2rem auto;
+  margin: 1rem auto;
 }
 
 .App-header {
@@ -19,15 +19,13 @@
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+h1{
+  margin-top:0;
+  margin-bottom: 0.5rem;
 }
 
-h1 {
-  font-size: calc(var(--base-cell-width)*2);
-  font-family: 'Bruno Ace', cursive;
-  letter-spacing: 1.2rem;
-  font-weight: bold;
+.App-link {
+  color: #61dafb;
 }
 
 @keyframes App-logo-spin {
@@ -59,12 +57,100 @@ h1 {
   margin: 1rem auto;
 }
 
+@media screen {
+  :root {
+    --base-cell-width: 2.5rem;
+  }
+  h1 {
+    font-size: 1.2rem;
+    font-family: "Bruno Ace", cursive;
+    letter-spacing: 0.9rem;
+    /* font-weight: bold; */
+  }
+  .Numpad {
+    display: grid;
+    grid-gap: calc(var(--base-cell-width) / 10);
+    grid-template-columns: repeat(3, 1fr);
+    font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
+      sans-serif;
+    font-size: calc(var(--base-cell-width));
+    margin: 0 auto;
+    margin-top: calc(var(--base-cell-width) / 4);
+    width: calc(var(--base-board-width));
+  }
+}
+
 @media screen and (min-width: 40rem) {
   :root {
-    --base-cell-width: 4rem;
+    --base-cell-width: 3rem;
+  }
+  h1 {
+    font-size: 2rem;
+    letter-spacing: 0.6rem;
+    /* font-weight: bold; */
   }
   .GameController {
-    font-size: calc(var(--base-cell-width) / 4);
+    font-size: calc(var(--base-cell-width) / 2);
+  }
+  .Numpad {
+    display: grid;
+    grid-gap: calc(var(--base-cell-width) / 10);
+    grid-template-columns: repeat(9, 1fr);
+    font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
+      sans-serif;
+    font-size: calc(var(--base-cell-width));
+    margin: 0 auto;
+    margin-top: calc(var(--base-cell-width) / 4);
+    width: calc(var(--base-board-width));
+  }
+}
+
+@media screen and (min-width: 55rem) {
+  :root {
+    --base-cell-width: 3rem;
+  }
+  h1 {
+    font-size: 2.2rem;
+    letter-spacing: 2rem;
+    /* font-weight: bold; */
+  }
+  .board-numpad-wrapper {
+    display: flex;
+    justify-content: center;
+  }
+  .board-wrapper {
+    margin: 0;
+    margin-right: 1rem;
+  }
+  .numpad-tips-wrapper {
+    margin-left: 1rem;
+  }
+  .Numpad {
+    display: grid;
+    grid-gap: calc(var(--base-cell-width) / 1);
+    grid-template-columns: repeat(3, 1fr);
+    /* color: gold; */
+    font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
+      sans-serif;
+    font-size: calc(var(--base-cell-width));
+    /* padding: calc(var(--base-cell-width) / 2); */
+    margin: 0 auto;
+    margin-top: calc(var(--base-cell-width) / 4);
+    width: calc(var(--base-board-width));
+  }
+  .GameController {
+    justify-content: center;
+  }
+}
+
+@media screen and (min-width: 70rem) {
+  :root {
+    --base-cell-width: 3.5rem;
+  }
+  h1 {
+    font-size: 3rem;
+    letter-spacing: 1.5rem;
+    /* font-weight: bold; */
   }
 }
 

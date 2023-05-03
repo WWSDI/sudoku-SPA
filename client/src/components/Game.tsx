@@ -1,12 +1,13 @@
 import "./Game.css";
 import { useReducer, useState } from "react";
 import makeBd from "../lib/makeBd";
-import { AC, actionType, BdType, } from "../lib/types";
+import { AC, actionType, BdType } from "../lib/types";
 import Board from "./Board";
 import BoardController from "./BoardController";
 import GameController from "./GameController";
 import Numpad from "./Numpad";
 import { getSudokuIndices } from "../util/util";
+import Tips from "./Tips";
 
 let initPuzzle = [
   3, 0, 9, 5, 1, 7, 0, 6, 0, 1, 2, 6, 8, 3, 0, 7, 5, 9, 0, 7, 5, 9, 0, 2, 3, 1,
@@ -25,7 +26,7 @@ export default function Game() {
   const [puzzle, setPuzzle] = useState(initPuzzle);
   const [solution, setSolution] = useState(initSolution);
   const [ac, setAc] = useState<AC>(
-    JSON.parse(localStorage.getItem("ac") as string) || { i: 0, v: 0 },
+    JSON.parse(localStorage.getItem("ac") as string) || { i: 0, v: 0 }
   );
   // keypress state is for solving the click ac and the user filled number disappear bug; delete this if no longer userful
   const [keypress, setKeypress] = useState(false);
@@ -60,13 +61,13 @@ export default function Game() {
           }
           // 2. create non-zero sudoku arr (plus ac); loop through the array and decide conflict state for each cell based own it's own sudoku cell values
           const nonZeroSudoku = getSudokuIndices(i).filter(
-            (idx) => newBd1[idx].v !== 0 || idx === i,
+            (idx) => newBd1[idx].v !== 0 || idx === i
           );
           console.log("🌸nonZeroSudoku", nonZeroSudoku);
           const conflicts: [number, boolean][] = nonZeroSudoku.map((idx) => {
             const sudoku = getSudokuIndices(idx);
             const sameValueCells = sudoku.filter(
-              (idx2) => newBd1[idx2].v === newBd1[idx].v && newBd1[idx].v !== 0,
+              (idx2) => newBd1[idx2].v === newBd1[idx].v && newBd1[idx].v !== 0
             );
             console.log("🌸sameValueCells", sameValueCells);
             return [idx, sameValueCells.length > 1];
@@ -93,7 +94,7 @@ export default function Game() {
   };
   const [bd, bdDispatch] = useReducer(
     bdReducer,
-    JSON.parse(localStorage.getItem("bd") as string) || makeBd(puzzle),
+    JSON.parse(localStorage.getItem("bd") as string) || makeBd(puzzle)
   );
 
   return (
@@ -112,43 +113,50 @@ export default function Game() {
         solution={solution}
         setSolution={setSolution}
       />
-      <Board
-        bd={bd}
-        bdDispatch={bdDispatch}
-        ac={ac}
-        setAc={setAc}
-        keypress={keypress}
-        setKeypress={setKeypress}
-        won={won}
-        setWon={setWon}
-        puzzle={puzzle}
-        setPuzzle={setPuzzle}
-        solution={solution}
-        setSolution={setSolution}
-      />
-      {/* <BoardController /> */}
-      {won ? (
-        <div className="congrats">
-          <p>🎊🥳🎉</p>
-          <p>You Won!</p>
-          <p>👏🍾🥂</p>
+      <div className="board-numpad-wrapper">
+        <div className="board-wrapper">
+          <Board
+            bd={bd}
+            bdDispatch={bdDispatch}
+            ac={ac}
+            setAc={setAc}
+            keypress={keypress}
+            setKeypress={setKeypress}
+            won={won}
+            setWon={setWon}
+            puzzle={puzzle}
+            setPuzzle={setPuzzle}
+            solution={solution}
+            setSolution={setSolution}
+          />
         </div>
-      ) : (
-        <Numpad
-          bd={bd}
-          bdDispatch={bdDispatch}
-          ac={ac}
-          setAc={setAc}
-          keypress={keypress}
-          setKeypress={setKeypress}
-          won={won}
-          setWon={setWon}
-          puzzle={puzzle}
-          setPuzzle={setPuzzle}
-          solution={solution}
-          setSolution={setSolution}
-        />
-      )}
+        {/* <BoardController /> */}
+        {won ? (
+          <div className="congrats">
+            <p>🎊🥳🎉</p>
+            <p>You Won!</p>
+            <p>👏🍾🥂</p>
+          </div>
+        ) : (
+          <div className="numpad-tips-wrapper">
+            <Numpad
+              bd={bd}
+              bdDispatch={bdDispatch}
+              ac={ac}
+              setAc={setAc}
+              keypress={keypress}
+              setKeypress={setKeypress}
+              won={won}
+              setWon={setWon}
+              puzzle={puzzle}
+              setPuzzle={setPuzzle}
+              solution={solution}
+              setSolution={setSolution}
+            />
+            <Tips />
+          </div>
+        )}
+      </div>
     </div>
   );
 }

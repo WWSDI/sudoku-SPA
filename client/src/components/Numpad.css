@@ -1,7 +1,7 @@
 .Numpad {
   display: grid;
-  grid-gap: calc(var(--base-cell-width) / 3);
-  grid-template-columns: repeat(3, 1fr);
+  grid-gap: calc(var(--base-cell-width) / 9);
+  /* grid-template-columns: repeat(3, 1fr); */
   color: cornflowerblue;
   font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
   font-size: calc(var(--base-cell-width));
@@ -44,28 +44,5 @@
   }
   100% {
     transform: translate(0%, -50%) scale(1.25, 0.75);
-  }
-}
-
-@media screen and (min-width: 38rem) {
-  :root {
-    --base-cell-width: 4rem;
-  }
-  h1 {
-    font-size: calc(var(--base-cell-width) / 2);
-    margin: 0.5rem auto;
-  }
-  .Numpad {
-    display: grid;
-    grid-gap: calc(var(--base-cell-width) / 10);
-    grid-template-columns: repeat(9, 1fr);
-    /* color: gold; */
-    font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
-      sans-serif;
-    font-size: calc(var(--base-cell-width));
-    /* padding: calc(var(--base-cell-width) / 2); */
-    margin: 0 auto;
-    margin-top: calc(var(--base-cell-width) / 4);
-    width: calc(var(--base-board-width));
   }
 }

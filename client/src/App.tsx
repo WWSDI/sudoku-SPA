@@ -12,7 +12,7 @@ function App() {
     <div className="App">
       <h1>Classic Sudoku</h1>
       <Game />
-      <Tips />
+      {/* <Tips /> */}
       <Footer />
     </div>
   );
