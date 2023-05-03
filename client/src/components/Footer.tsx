@@ -1,6 +1,9 @@
+import "./Footer.css"
+
 export const Footer = () => {
   return (
     <div className="footer">
+      <hr></hr>
       <p>
         Developed by <strong>Shawn Su</strong>
       </p>
