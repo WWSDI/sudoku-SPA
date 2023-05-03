@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { BoardProps, PuzzleSet } from "../lib/types";
+import { BoardProps, PuzzleSet, Difficulty } from "../lib/types";
 import { fetchPuzzleSet, storeFetchedPuzzles } from "../lib/localStorage";
 import "./GameController.css";
 import makeBd from "../lib/makeBd";
@@ -14,7 +14,7 @@ export default function GameController({
   const [difficulty, setDifficulty] = useState("easy");
 
   const startNewGame = async () => {
-    const puzzleSet = await fetchPuzzleSet(difficulty);
+    const puzzleSet = await fetchPuzzleSet(difficulty as Difficulty);
 
     if (puzzleSet) {
       setPuzzle(puzzleSet.puzzle);

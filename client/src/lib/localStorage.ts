@@ -1,6 +1,6 @@
 import { Difficulty, PuzzleSet } from "./types";
 
-export const fetchPuzzleSet = async (difficulty: string) => {
+export const fetchPuzzleSet = async (difficulty: Difficulty) => {
   // console.log(`fetching puzzles from ${process.env.REACT_APP_API_URI}/puzzles`);
   try {
     const response = await fetch(
