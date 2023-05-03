@@ -10,7 +10,7 @@ import Tips from "./components/Tips";
 function App() {
   return (
     <div className="App">
-      <h1>Classical Sudoku</h1>
+      <h1>Classic Sudoku</h1>
       <Game />
       <Tips />
       <Footer />

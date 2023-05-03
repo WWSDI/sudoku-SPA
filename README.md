@@ -1,4 +1,4 @@
 ## Deployment
-- client:  netlify.com
+- client: netlify.com
 - server: render.com
 - db: https://cloud.mongodb.com/ (mongodb atlas)

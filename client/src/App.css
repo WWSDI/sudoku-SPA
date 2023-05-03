@@ -1,5 +1,5 @@
 :root {
-  --base-cell-width: 10vw;
+  --base-cell-width: 9vw;
   --base-board-width: calc(9 * var(--base-cell-width));
 }
 
@@ -24,7 +24,10 @@
 }
 
 h1 {
-  font-size: calc(var(--base-cell-width) / 1.2);
+  font-size: calc(var(--base-cell-width)*2);
+  font-family: 'Bruno Ace', cursive;
+  letter-spacing: 1.2rem;
+  font-weight: bold;
 }
 
 @keyframes App-logo-spin {
