@@ -4,9 +4,9 @@ export const Footer = () => {
       <p>
         Developed by <strong>Shawn Su</strong>
       </p>
-      <p>Launched on 4 Nov 2021</p>
+      <p>Originally launched on 4 Nov 2021</p>
       <p>
-        Studying at {""}
+        Studied at {""}
         <a target="_blank" rel='noreferrer' href="https://www.developers.ac.nz/">Developers Institute</a>
       </p>
       <div className="logo-container">
