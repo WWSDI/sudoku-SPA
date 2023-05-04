@@ -34,7 +34,7 @@ select {
   background-color: goldenrod;
 }
 
-.warning {
+/* .warning {
   animation-name: fade-in;
   animation-delay: 1.5s;
   animation-duration: 2s;
@@ -50,7 +50,7 @@ select {
   to {
     opacity: 100%;
   }
-}
+} */
 
 .lds-ellipsis {
   display: inline-block;
