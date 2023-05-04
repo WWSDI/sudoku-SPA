@@ -104,3 +104,6 @@ export const isEmpty = (data: any) => {
   }
   return false;
 };
+
+export const awaitTimeout = (delay: number) =>
+  new Promise((resolve) => setTimeout(resolve, delay));
