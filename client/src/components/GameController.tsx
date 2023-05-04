@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BoardProps, PuzzleSet, Difficulty } from "../lib/types";
 import { fetchPuzzleSet, storeFetchedPuzzles } from "../lib/localStorage";
 import "./GameController.css";
 import makeBd from "../lib/makeBd";
-import { isEmpty } from "../util/util";
+import { awaitTimeout, isEmpty } from "../util/util";
 
 export default function GameController({
   setPuzzle,
@@ -12,11 +12,17 @@ export default function GameController({
   setWon,
 }: BoardProps) {
   const [difficulty, setDifficulty] = useState("easy");
+  const [newGameState, setNewGameState] = useState("idle");
 
   const startNewGame = async () => {
+    setNewGameState("pending");
+    // await for 10s
+    await awaitTimeout(10000)
+
     const puzzleSet = await fetchPuzzleSet(difficulty as Difficulty);
 
     if (puzzleSet) {
+      setNewGameState("complete");
       setPuzzle(puzzleSet.puzzle);
       setSolution(puzzleSet.solution);
       bdDispatch({
@@ -25,7 +31,11 @@ export default function GameController({
       });
       setWon(false);
     }
+    setNewGameState("idle");
   };
+
+  // preloader
+  useEffect(() => {});
 
   return (
     <div className="GameController">
@@ -47,7 +57,16 @@ export default function GameController({
         </select>
       </label>
       <div id="new-game" onClick={startNewGame}>
-        New Game
+        {newGameState === "pending" ? (
+          <div className="ripple">
+            <div>
+              <div></div>
+            </div>
+            "It may take up to 40s due to Free Tier Server slow response"
+          </div>
+        ) : (
+          "NEW GAME"
+        )}
       </div>
       {/* This one needs to use conflict <div>Show Mistakes</div> */}
       {/* <div className="time">Time: </div> */}
