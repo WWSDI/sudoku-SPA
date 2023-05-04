@@ -18,7 +18,7 @@ export default function GameController({
   const startNewGame = async () => {
     setNewGameState("pending");
     // await for 10s
-    await awaitTimeout(Math.random() * 10000);
+    // await awaitTimeout(Math.random() * 10000);
 
     const puzzleSet = await fetchPuzzleSet(difficulty as Difficulty);
 
