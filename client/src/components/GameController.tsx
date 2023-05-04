@@ -4,6 +4,7 @@ import { fetchPuzzleSet, storeFetchedPuzzles } from "../lib/localStorage";
 import "./GameController.css";
 import makeBd from "../lib/makeBd";
 import { awaitTimeout, isEmpty } from "../util/util";
+import { randomFill } from "crypto";
 
 export default function GameController({
   setPuzzle,
@@ -17,7 +18,7 @@ export default function GameController({
   const startNewGame = async () => {
     setNewGameState("pending");
     // await for 10s
-    await awaitTimeout(10000)
+    await awaitTimeout(Math.random() * 10000);
 
     const puzzleSet = await fetchPuzzleSet(difficulty as Difficulty);
 
@@ -33,9 +34,6 @@ export default function GameController({
     }
     setNewGameState("idle");
   };
-
-  // preloader
-  useEffect(() => {});
 
   return (
     <div className="GameController">
@@ -56,18 +54,37 @@ export default function GameController({
           <option value="hell">Hell</option>
         </select>
       </label>
-      <div id="new-game" onClick={startNewGame}>
-        {newGameState === "pending" ? (
-          <div className="ripple">
-            <div>
+
+      {newGameState === "pending" ? (
+        <div className="warning">
+          <div
+            style={{
+              display: "flex",
+              borderRadius: "0.5rem",
+              padding: "0 .5rem",
+              alignItems: "center",
+            }}
+          >
+            <div className="lds-ellipsis">
+              <div></div>
+              <div></div>
+              <div></div>
               <div></div>
             </div>
-            "It may take up to 40s due to Free Tier Server slow response"
+            <div>
+              {/* <p>Loading</p> */}
+              <p style={{ fontSize: "small", marginLeft: "0.7rem" }}>
+                It may take up to <em>40s</em> due to Free Tier Server slow
+                response
+              </p>
+            </div>
           </div>
-        ) : (
-          "NEW GAME"
-        )}
-      </div>
+        </div>
+      ) : (
+        <div id="new-game" onClick={startNewGame}>
+          NEW GAME
+        </div>
+      )}
       {/* This one needs to use conflict <div>Show Mistakes</div> */}
       {/* <div className="time">Time: </div> */}
     </div>
